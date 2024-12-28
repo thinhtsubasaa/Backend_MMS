@@ -21,7 +21,7 @@ namespace ERP.Models
         public string ViTri_Lat { get; set; }
         public string ViTri_Long { get; set; }
         public string TinhTrang { get; set; }
-        public string NgayBatDau { get; set; }
+        public DateTime? NgayBatDau { get; set; }
         public string Note { get; set; }
     }
 }

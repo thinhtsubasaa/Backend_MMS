@@ -250,83 +250,75 @@ namespace ERP.Controllers
             return lst.GroupBy(p => new { p.MaThietBi }).Where(p => p.Count() > 1).Count();
         }
 
-        // [HttpPost("Save_Import")]
-        // public ActionResult Post_SaveImport(List<ImportMMS_DS_ThietBi> DH)
-        // {
-        //     lock (Commons.LockObjectState)
-        //     {
-        //         if (!ModelState.IsValid)
-        //         {
-        //             return BadRequest(ModelState);
-        //         }
-        //         IFormatProvider fm = new CultureInfo("en-US", true);
+        [HttpPost("Save_Import")]
+        public ActionResult Post_SaveImport(List<ImportMMS_DS_ThietBi> DH)
+        {
+            lock (Commons.LockObjectState)
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                IFormatProvider fm = new CultureInfo("en-US", true);
 
-        //         foreach (var item in DH)
-        //         {
+                foreach (var item in DH)
+                {
 
 
-        //             DateTime? ngayBatDau = null;
-        //             if (DateTime.TryParseExact(item.NgayBatDau, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime tempNgayDenKV))
-        //             {
-        //                 ngayBatDau = tempNgayDenKV;
-        //             }
+                    DateTime? ngayBatDau = null;
+                    if (DateTime.TryParseExact(item.NgayBatDau, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime tempNgayDenKV))
+                    {
+                        ngayBatDau = tempNgayDenKV;
+                    }
 
-        //             var exit = uow.DS_PhuongTiens.GetSingle(x => !x.IsDeleted && x.MaPhuongTien.ToLower() == item.MaPhuongTien.ToLower());
-        //             if (exit == null)
-        //             {
-        //                 uow.DS_PhuongTiens.Add(new DS_PhuongTien
-        //                 {
-        //                     MaPhuongTien = item.MaPhuongTien,
-        //                     BienSo1 = item.BienSo1,
-        //                     BienSo2 = item.BienSo2,
-        //                     DonViSuDung = item.DonViSuDung,
-        //                     TinhTrang = item.TinhTrang,
-        //                     NgayBatDau = ngayBatDau,
-        //                     LoaiPT = item.LoaiPT,
-        //                     Model = item.Model,
-        //                     Model_Option = item.Model_Option,
-        //                     KLBT = item.KLBT,
-        //                     KLHH = item.KLHH,
-        //                     KLTB = item.KLTB,
-        //                     KLKT = item.KLKT,
-        //                     Address_nearest = item.Address_nearest,
-        //                     ViTri = item.ViTri,
-        //                     ViTri_Lat = item.ViTri_Lat,
-        //                     ViTri_Long = item.ViTri_Long,
-        //                     CreatedDate = DateTime.Now,
-        //                     CreatedBy = Guid.Parse(User.Identity.Name),
-        //                 });
-        //             }
-        //             else
-        //             {
-        //                 // var exit = uow.KeHoachGiaoXes.GetSingle(x => x.SoKhung.ToLower() == item.SoKhung.ToLower());
-        //                 exit.MaPhuongTien = item.MaPhuongTien;
-        //                 exit.BienSo1 = item.BienSo1;
-        //                 exit.BienSo2 = item.BienSo2;
-        //                 exit.DonViSuDung = item.DonViSuDung;
-        //                 exit.TinhTrang = item.TinhTrang;
-        //                 exit.NgayBatDau = ngayBatDau;
-        //                 exit.LoaiPT = item.LoaiPT;
-        //                 exit.Model = item.Model;
-        //                 exit.Model_Option = item.Model_Option;
-        //                 exit.KLBT = item.KLBT;
-        //                 exit.KLHH = item.KLHH;
-        //                 exit.KLTB = item.KLTB;
-        //                 exit.KLKT = item.KLKT;
-        //                 exit.Address_nearest = item.Address_nearest;
-        //                 exit.ViTri = item.ViTri;
-        //                 exit.ViTri_Lat = item.ViTri_Lat;
-        //                 exit.ViTri_Long = item.ViTri_Long;
-        //                 exit.UpdatedDate = DateTime.Now;
-        //                 exit.UpdatedBy = Guid.Parse(User.Identity.Name);
-        //                 uow.DS_PhuongTiens.Update(exit);
-        //             }
+                    var exit = uow.DS_Thietbis.GetSingle(x => !x.IsDeleted && x.MaThietBi.ToLower() == item.MaThietBi.ToLower());
+                    if (exit == null)
+                    {
+                        uow.DS_Thietbis.Add(new DS_ThietBi
+                        {
+                            MaThietBi = item.MaThietBi,
+                            MaCode_BienSo1 = item.MaCode_BienSo1,
+                            MaCode_BienSo2 = item.MaCode_BienSo2,
+                            Name = item.Name,
+                            TinhTrang = item.TinhTrang,
+                            NgayBatDau = ngayBatDau,
+                            LoaiTB = item.LoaiTB,
+                            Model = item.Model,
+                            PhanBo = item.PhanBo,
+                            ViTri = item.ViTri,
+                            ViTri_Lat = item.ViTri_Lat,
+                            ViTri_Long = item.ViTri_Long,
+                            CreatedDate = DateTime.Now,
+                            CreatedBy = Guid.Parse(User.Identity.Name),
+                        });
+                    }
+                    else
+                    {
+                        // var exit = uow.KeHoachGiaoXes.GetSingle(x => x.SoKhung.ToLower() == item.SoKhung.ToLower());
+                        exit.MaThietBi = item.MaThietBi;
+                        exit.MaCode_BienSo1 = item.MaCode_BienSo1;
+                        exit.MaCode_BienSo2 = item.MaCode_BienSo2;
+                        exit.Name = item.Name;
+                        exit.TinhTrang = item.TinhTrang;
+                        exit.NgayBatDau = ngayBatDau;
+                        exit.LoaiTB = item.LoaiTB;
+                        exit.Model = item.Model;
+                        exit.PhanBo = item.PhanBo;
+                        exit.ViTri = item.ViTri;
+                        exit.ViTri_Lat = item.ViTri_Lat;
+                        exit.ViTri_Long = item.ViTri_Long;
+                        exit.CreatedDate = DateTime.Now;
+                        exit.CreatedBy = Guid.Parse(User.Identity.Name);
+                        exit.UpdatedDate = DateTime.Now;
+                        exit.UpdatedBy = Guid.Parse(User.Identity.Name);
+                        uow.DS_Thietbis.Update(exit);
+                    }
 
-        //         }
-        //         uow.Complete();
-        //         return StatusCode(StatusCodes.Status200OK);
-        //     }
-        // }
+                }
+                uow.Complete();
+                return StatusCode(StatusCodes.Status200OK);
+            }
+        }
 
         [HttpGet("GetById")]
         public ActionResult Get(Guid id)
