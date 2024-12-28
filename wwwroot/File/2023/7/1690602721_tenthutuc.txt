@@ -1,0 +1,12 @@
+sp_GetKeHoachBaoTri
+sp_DeleteKeHoachBaoTri
+sp_GetBaoCaoKeHoachBaoTriTheoThang
+sp_GetBaoCaoTraCuuLichSuBaoTri
+sp_GetBaoCaoKeHoachBaoTriTheoNam
+sp_GetDanhSachThucHienBaoTri
+sp_GetChiTietBaoTriById
+sp_GetTienDoBaoTri
+sp_PutDanhGiaChatLuongBaoTri
+sp_PutChuyenNgayBaoTri
+sp_PutChuyenNguoiThucHien
+sp_PutHuyBaoTri

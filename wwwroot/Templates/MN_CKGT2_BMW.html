@@ -1,0 +1,777 @@
+<link rel="stylesheet" href="styles.css">
+<script>
+    // Khai báo các điểm đến trực tiếp trong HTML
+    const path = [
+      { left: '0%', top: '-50%', rotate: '-90deg', duration: 0 },
+      { left: '0%', top: '-1350%', rotate: '-90deg', duration: 18 },
+      { left: '50%', top: '-1400%', rotate: '0deg', duration: 2 },
+      { left: '1050%', top: '-1400%', rotate: '0deg', duration: 28 },
+      { left: '1100%', top: '-1350%', rotate: '90deg', duration: 2 },
+      { left: '1100%', top: '-50%', rotate: '90deg', duration: 18 },
+      { left: '1050%', top: '0%', rotate: '180deg', duration: 2 },
+      { left: '50%', top: '0%', rotate: '180deg', duration: 28 },
+      { left: '0%', top: '-50%', rotate: '270deg', duration: 2 }
+    ];
+
+    // Tính tổng thời gian di chuyển
+    const totalDuration = path.reduce((sum, point) => sum + point.duration, 0);
+
+    // Chuyển cấu trúc JSON thành keyframes CSS và áp dụng chúng
+    const car = document.getElementById('car');
+    let keyframes = '';
+    let accumulatedTime = 0;
+
+    path.forEach((point, index) => {
+      const percentage = (accumulatedTime / totalDuration) * 100;
+      keyframes += `
+        ${percentage}% {
+          left: ${point.left};
+          top: ${point.top};
+          transform: rotate(${point.rotate});
+        }
+      `;
+      accumulatedTime += point.duration;
+    });
+
+    const styleSheet = document.styleSheets[0];
+    const animationName = 'moveCar';
+
+    styleSheet.insertRule(`
+      @keyframes ${animationName} {
+        ${keyframes}
+      }
+    `, styleSheet.cssRules.length);
+
+    // Sử dụng totalDuration để thiết lập thời gian animation
+    car.style.animation = `${animationName} ${totalDuration}s linear infinite`;
+  </script>
+  
+<div class="div_frame">
+    <div class="div_row">
+        <span class="sp_title">BÃI XE KHO CƠ KHÍ GIAO THÔNG 2 (BIÊN HÒA) <span style="color: rgb(251, 255, 0);">- BMW </span></span></br>
+        <span class="sp_title_description">(BMW)</span>
+    </div>
+
+    <div class="zoom_controls">
+        <button id="zoomIn">+</button>
+        <span id="zoomValue">75%</span>
+        <button id="zoomOut">-</button>
+    </div>
+    <div class="div_Layout" style="width: 4000px;">
+
+        <div alt="KV1 Giao - Nhận" class="div_column_2x">
+
+            <table alt="KV1 Giao - Nhận" cellspacing="0" cellpadding="0" style="width: 100%;">
+                <thead class="column_title">
+                    <tr>
+                        <th class="column_title_dong_cot"></th>
+                        <th>1</th>
+                        <th>2</th>
+                        <th>3</th>
+                        <th>4</th>
+                        <th>5</th>
+                        <th>6</th>
+                        <th>7</th>
+                        <th>8</th>
+                        <th>9</th>
+                        <th>10</th>
+                        <th>11</th>
+                        <th>12</th>
+                        <th>13</th>
+                        <th>14</th>
+                        <th>15</th>
+                        <th>16</th>
+                        <th>17</th>
+                        <th>18</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr alt="KV1 - 1">
+                        <td class="row_title h40">
+                            <div class="empty_Road"></div>
+                            <div class="empty_Road"></div>
+                        </td>
+
+                        <td alt="1"><div class="empty_Road"><div class="textNoticeBlue X2 Y2 border"></div></div>
+                        </td>
+                        <td alt="2"><div class="empty_Road"></div>
+                        </td>
+                        <td alt="3"><div class="empty_Road"></div>
+                        </td>
+                        <td alt="4"><div class="empty_Road"></div>
+                        </td>
+                        <td alt="5"><div class="empty_Road"></div>
+                        </td>
+                        <td alt="6"><div class="empty_Road"></div>
+                        </td>
+                        <td alt="7"><div class="empty_Road"></div>
+                        </td>
+                        <td alt="8"><div class="empty_Road"></div>
+                        </td>
+                        <td alt="9"><div class="empty_Road"></div>
+                        </td>
+                        <td alt="10"><div class="empty_Road"></div>
+                        </td>
+                        <td alt="11"><div class="empty_Road"></div>
+                        </td>
+                        <td alt="12"><div class="empty_Road"></div>
+                        </td>
+                        <td alt="13"><div class="empty_Road"></div>
+                        </td>
+                        <td alt="14"><div class="empty_Road"></div>
+                        </td>
+                        <td alt="15"><div class="empty_Road"></div>
+                        </td>
+                        <td alt="16"><div class="empty_Road"></div>
+                        </td>
+                        <td alt="17"><div class="empty_Road"></div>
+                        </td>
+                        <td alt="18"><div class="empty_Road"></div>
+                        </td>                        
+                    </tr>
+                    <tr alt="KV1 - 2">
+                        <td alt="1">
+                            <div class="empty_Road">
+                                <div class="arrow_goLeft"></div>
+                            </div>
+                            <div class="empty_Road">
+                                <div class="textNoticeBlue white X3">CỔNG RA VÀO</div>
+                            </div>
+                        </td>
+                        <td alt="2">
+                            <div class="empty_Road">
+                            </div>
+                        </td>
+                        <td alt="3">
+                            <div class="empty_Road">
+                            </div>
+                        </td>
+                        <td alt="4">
+                            <div class="empty_Road">
+                            </div>
+                        </td>
+                        <td alt="5">
+                            <div class="empty_Road"><div class="textNoticeBlue Y2 white large"> Cửa chính</div>
+                            </div>
+                            <div class="empty_Road">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="empty_Road">
+                                <div class="arrow_goLeft"></div>
+                            </div>
+                            <div class="empty_Road">
+                                <div class="arrow_goRight"></div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr alt="KV1 - 3">
+                        <td alt="title">
+                            <div class="empty_Road">
+                                <div class="arrow_goRight"></div>
+                            </div>
+                            <div class="row_title h40 w100"></div>
+                            <div class="row_title h40"></div>
+                            <div class="row_title h40"></div>
+                            <div class="row_title h40"></div>
+                            <div class="row_title h40"></div>
+                            <div class="row_title h40"></div>
+                            <div class="row_title h40"></div>
+                            <div class="row_title h40"></div>
+                            <div class="row_title h40"></div>
+                            <div class="row_title h40"></div>
+                            <div class="row_title h40"></div>
+                            <div class="row_title h40"></div>
+                            <div class="row_title h40"></div>
+                            <div class="row_title h40"></div>
+                            <div class="row_title h40"></div>
+                        </td>
+                        <td alt="1">
+                            <div class="empty_Road"></div>
+                            <div id="CN-01"></div>
+                            <div id="CN-02"></div>
+                            <div id="CN-03"></div>
+                            <div id="CN-04"></div>
+                            <div id="CN-05"></div>
+                            <div id="CN-06"></div>
+                            <div id="CN-07"></div>
+                            <div id="CN-08"></div>
+                            <div id="CN-09"></div>
+                            <div id="CN-10"></div>
+                            <div id="CN-11"></div>
+                            <div id="CN-12"></div>
+                            <div id="CN-13"></div>
+                            <div id="CN-14"></div>
+                            <div id="CN-15"></div>
+                        </td>
+                        <td alt="2">
+                            <div class="empty_Road"></div>
+                            <div class="empty_Road"></div>
+                            <div class="empty_Road"></div>
+                            <div class="empty_Road"></div>
+                            <div class="empty_Road"></div>
+                            <div class="empty_Road"><div class="textNoticeBlue Y6 white large textDoc">KV XE CHỜ NHẬN</div></div>
+                            <div class="empty_Road"></div>
+                            <div class="empty_Road"></div>
+                            <div class="empty_Road"></div>
+                            <div class="empty_Road"></div>
+                            <div class="empty_Road"></div>
+                            <div class="empty_Road"></div>
+                            <div class="empty_Road"><div class="textNoticeBlue Y4 large textDoc">KV RỬA XE</div></div>
+                            <div class="empty_Road"></div>
+                            <div class="empty_Road"></div>
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td alt="3">
+                            <div class="empty_Road"></div>
+                            <div class="empty_Road"></div>
+                            <div class="empty_Road"><div class="textNoticeBlue Y6 white large textDoc">KV XE CHỜ GIAO</div></div>
+                            <div class="empty_Road"></div>
+                            <div class="empty_Road"></div>
+                            <div class="empty_Road"></div>
+                            <div class="empty_Road"></div>
+                            <div class="empty_Road"></div>
+                            <div class="empty_Road"></div>
+                            <div class="empty_Road"></div>
+                            <div class="empty_Road"></div>
+                            <div class="empty_Road"></div>
+
+                            <div class="Sac" id="RuaXe-01"></div>
+                            <div class="Sac" id="RuaXe-02"></div>
+                            <div class="Sac" id="RuaXe-03"></div>
+                            <div class="Sac" id="RuaXe-04"></div>
+                        </td>
+                        <td alt="4">
+                            <div id="CG-01"></div>
+                            <div id="CG-02"></div>
+                            <div id="CG-03"></div>
+                            <div id="CG-04"></div>
+                            <div id="CG-05"></div>
+                            <div id="CG-06"></div>
+                            <div id="CG-07"></div>
+                            <div id="CG-08"></div>
+                            <div id="CG-09"></div>
+                            <div id="CG-10"></div>
+                            <div class="empty_Road"><div class="textNoticeBlue Y2 white large"> Cửa <br>kho 2</div></div>
+                            <div class="empty_Road"></div>
+
+                            <div class="Sac" id="RuaXe-05"></div>
+                            <div class="Sac" id="RuaXe-06"></div>
+                            <div class="Sac" id="RuaXe-07"></div>
+                            <div class="Sac" id="RuaXe-08"></div>
+                        </td>
+                        <td alt="5">
+                            <div class="row_title h40"></div>
+                            <div class="row_title h40"></div>
+                            <div class="row_title h40"></div>
+                            <div class="row_title h40"></div>
+                            <div class="row_title h40"></div>
+                            <div class="row_title h40"></div>
+                            <div class="row_title h40"></div>
+                            <div class="row_title h40"></div>
+                            <div class="row_title h40"></div>
+                            <div class="row_title h40"></div>
+                            <div class="empty_Road">
+                                <div class="arrow_goLeft"></div>
+                            </div>
+                            <div class="empty_Road">
+                                <div class="arrow_goRight"></div>
+                            </div>
+
+                            <div class="row_title h40"></div>
+                            <div class="row_title h40"></div>
+                            <div class="row_title h40"></div>
+                            <div class="row_title h40"></div>
+                        </td>
+                    </tr>
+                    <tr alt="KV1 - 4" class="row_title">
+                        <td>
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td>
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td>
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td>
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td>
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td>
+                            <div class="empty_Road"></div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div alt="KV2 Kho xe" class="div_column_2x">
+
+            <table alt="KV-02 Kho xe" cellspacing="0" cellpadding="0" style="width: 100%;">
+                <thead class="column_title">
+                    <tr class="h30">
+                        <th>6</th>
+                        <th>7</th>
+                        <th>8</th>
+                        <th>9</th>
+                        <th>10</th>
+                        <th>11</th>
+                        <th>12</th>
+                        <th>13</th>
+                        <th>14</th>
+                        <th>15</th>
+                        <th>16</th>
+                        <th>17</th>
+                        <th>18</th>
+                        <th>19</th>
+                        <th>20</th>
+                        <th>21</th>
+                        <th>22</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr alt="KV2 - 1" class="row_title">
+                        <td>
+                            <div class="empty_Road"></div>
+                            <div class="empty_Road"></div>
+                        </td>
+
+                        <td>
+                            <div class="empty_Road"></div>
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td>
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td>
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td>
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td>
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td>
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td>
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td>
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td>
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td>
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td>
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td>
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td>
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td>
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td>
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td>
+                            <div class="empty_Road"></div>
+                        </td>
+                    </tr>
+                    <tr ALT="KV2 - 2">
+                        <td>
+                            <div class="empty_Road"></div>
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td>
+                            <div class="empty_Road">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="empty_Road">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="empty_Road">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="empty_Road">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td>
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td>
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td>
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td>
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td>
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td>
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td>
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td>
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td>
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td>
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td class="row_title">
+                            <div class="empty_Road"><div class="textNoticeBlue Y2 white" large>Exit</div></div>
+                        </td>
+                        
+                    </tr>
+
+                    <tr ALT="KV2 - 3">
+                        
+                        <td alt="1">
+                            
+                            <div class="Sac" id="KiemTra-01"></div>
+                            <div class="Sac" id="KiemTra-02"></div>
+                            <div class="Sac" id="KiemTra-03"></div>
+                            <div class="Sac" id="KiemTra-04"></div>
+                            <div class="Sac" id="KiemTra-05"></div>
+                            <div class="Sac" id="KiemTra-06"></div>
+                            <div class="Sac" id="KiemTra-07"></div>
+                            <div class="Sac" id="KiemTra-08"></div>
+                            <div class="Sac" id="KiemTra-09"></div>
+                            <div class="Sac" id="KiemTra-10"></div>
+                            <div class="empty_Road"></div>
+                            <div class="empty_Road"></div>
+                            <div class="Sac" id="Sac-01"></div>
+                            <div class="Sac" id="Sac-02"></div>
+                            <div class="Sac" id="Sac-03"></div>
+                            <div class="Sac" id="Sac-04"></div>
+                        </td>
+                        <td alt="2">
+                            <div class="empty_Road"><div class="textNoticeBlue Y10 textDoc large">KV KIỂM TRA XE</div></div>
+                            <div class="empty_Road"></div>
+                            <div class="empty_Road"></div>
+                            <div class="empty_Road"></div>
+                            <div class="empty_Road"></div>
+                            <div class="empty_Road"></div>
+                            <div class="empty_Road"></div>
+                            <div class="empty_Road"></div>
+                            <div class="empty_Road"></div>
+                            <div class="empty_Road"></div>
+                            <div class="empty_Road"></div>
+                            <div class="empty_Road"></div>
+                            <div class="empty_Road"><div class="textNoticeBlue Y4 textDoc large">KV SẠC BÌNH</div></div>
+                            <div class="empty_Road"></div>
+                            <div class="empty_Road"></div>
+                            <div class="empty_Road"></div>
+                        </td>
+                        
+                        <td alt="3">
+                            <div class="empty_Road"><div class="textNoticeBlue X3 white">BMW (45 xe)</div></div>
+                            <div id="A-01"></div>
+                            <div id="A-02"></div>
+                            <div id="A-03"></div>
+                            <div id="A-04"></div>
+                            <div id="A-05"></div>
+                            <div id="A-06"></div>
+                            <div id="A-07"></div>
+                            <div id="A-08"></div>
+                            <div id="A-09"></div>
+                            <div id="A-10"></div>
+                            <div id="A-11"></div>
+                            <div id="A-12"></div>
+                            <div id="A-13"></div>
+                            <div id="A-14"></div>
+                            <div id="A-15"></div>
+                        </td>
+                        <td alt="4">
+                            <div class="empty_Road"></div>
+                            <div id="B-01"></div>
+                            <div id="B-02"></div>
+                            <div id="B-03"></div>
+                            <div id="B-04"></div>
+                            <div id="B-05"></div>
+                            <div id="B-06"></div>
+                            <div id="B-07"></div>
+                            <div id="B-08"></div>
+                            <div id="B-09"></div>
+                            <div id="B-10"></div>
+                            <div id="B-11"></div>
+                            <div id="B-12"></div>
+                            <div id="B-13"></div>
+                            <div id="B-14"></div>
+                            <div id="B-15"></div>
+                        </td>
+                        <td alt="5">
+                            <div class="empty_Road"></div>
+                            <div id="C-01"></div>
+                            <div id="C-02"></div>
+                            <div id="C-03"></div>
+                            <div id="C-04"></div>
+                            <div id="C-05"></div>
+                            <div id="C-06"></div>
+                            <div id="C-07"></div>
+                            <div id="C-08"></div>
+                            <div id="C-09"></div>
+                            <div id="C-10"></div>
+                            <div id="C-11"></div>
+                            <div id="C-12"></div>
+                            <div id="C-13"></div>
+                            <div id="C-14"></div>
+                            <div id="C-15"></div>
+                        </td>
+                        <td alt="6">
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td alt="7">
+                            <div class="empty_Road"><div class="textNoticeBlue X4 white">BMW (60 xe)</div></div>
+                            <div id="D-01"></div>
+                            <div id="D-02"></div>
+                            <div id="D-03"></div>
+                            <div id="D-04"></div>
+                            <div id="D-05"></div>
+                            <div id="D-06"></div>
+                            <div id="D-07"></div>
+                            <div id="D-08"></div>
+                            <div id="D-09"></div>
+                            <div id="D-10"></div>
+                            <div id="D-11"></div>
+                            <div id="D-12"></div>
+                            <div id="D-13"></div>
+                            <div id="D-14"></div>
+                            <div id="D-15"></div>
+                        </td>
+                        <td alt="8">
+                            <div class="empty_Road"></div>
+                            <div id="E-01"></div>
+                            <div id="E-02"></div>
+                            <div id="E-03"></div>
+                            <div id="E-04"></div>
+                            <div id="E-05"></div>
+                            <div id="E-06"></div>
+                            <div id="E-07"></div>
+                            <div id="E-08"></div>
+                            <div id="E-09"></div>
+                            <div id="E-10"></div>
+                            <div id="E-11"></div>
+                            <div id="E-12"></div>
+                            <div id="E-13"></div>
+                            <div id="E-14"></div>
+                            <div id="E-15"></div>
+                        </td>
+                        <td alt="9">
+                            <div class="empty_Road"></div>
+                            <div id="F-01"></div>
+                            <div id="F-02"></div>
+                            <div id="F-03"></div>
+                            <div id="F-04"></div>
+                            <div id="F-05"></div>
+                            <div id="F-06"></div>
+                            <div id="F-07"></div>
+                            <div id="F-08"></div>
+                            <div id="F-09"></div>
+                            <div id="F-10"></div>
+                            <div id="F-11"></div>
+                            <div id="F-12"></div>
+                            <div id="F-13"></div>
+                            <div id="F-14"></div>
+                            <div id="F-15"></div>
+                        </td>
+                        <td alt="10">
+                            <div class="empty_Road"></div>
+                            <div id="G-01"></div>
+                            <div id="G-02"></div>
+                            <div id="G-03"></div>
+                            <div id="G-04"></div>
+                            <div id="G-05"></div>
+                            <div id="G-06"></div>
+                            <div id="G-07"></div>
+                            <div id="G-08"></div>
+                            <div id="G-09"></div>
+                            <div id="G-10"></div>
+                            <div id="G-11"></div>
+                            <div id="G-12"></div>
+                            <div id="G-13"></div>
+                            <div id="G-14"></div>
+                            <div id="G-15"></div>
+                        </td>
+                        <td alt="11">
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td alt="12">
+                            <div class="empty_Road"><div class="textNoticeBlue X2 white">BMW (30 xe)</div></div>
+                            <div id="H-01"></div>
+                            <div id="H-02"></div>
+                            <div id="H-03"></div>
+                            <div id="H-04"></div>
+                            <div id="H-05"></div>
+                            <div id="H-06"></div>
+                            <div id="H-07"></div>
+                            <div id="H-08"></div>
+                            <div id="H-09"></div>
+                            <div id="H-10"></div>
+                            <div id="H-11"></div>
+                            <div id="H-12"></div>
+                            <div id="H-13"></div>
+                            <div id="H-14"></div>
+                            <div id="H-15"></div>
+                        </td>
+                        <td alt="13">
+                            <div class="empty_Road"></div>
+                            <div id="K-01"></div>
+                            <div id="K-02"></div>
+                            <div id="K-03"></div>
+                            <div id="K-04"></div>
+                            <div id="K-05"></div>
+                            <div id="K-06"></div>
+                            <div id="K-07"></div>
+                            <div id="K-08"></div>
+                            <div id="K-09"></div>
+                            <div id="K-10"></div>
+                            <div id="K-11"></div>
+                            <div id="K-12"></div>
+                            <div id="K-13"></div>
+                            <div id="K-14"></div>
+                            <div id="K-15"></div>
+                        </td>
+                        <td alt="14">
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td alt="15">
+                            <div class="empty_Road"><div class="textNoticeBlue X2 white">BMW (30 xe)</div></div>
+                            <div id="L-01"></div>
+                            <div id="L-02"></div>
+                            <div id="L-03"></div>
+                            <div id="L-04"></div>
+                            <div id="L-05"></div>
+                            <div id="L-06"></div>
+                            <div id="L-07"></div>
+                            <div id="L-08"></div>
+                            <div id="L-09"></div>
+                            <div id="L-10"></div>
+                            <div id="L-11"></div>
+                            <div id="L-12"></div>
+                            <div id="L-13"></div>
+                            <div id="L-14"></div>
+                            <div id="L-15"></div>
+                        </td>
+                        <td alt="16">
+                            <div class="empty_Road"></div>
+                            <div id="M-01"></div>
+                            <div id="M-02"></div>
+                            <div id="M-03"></div>
+                            <div id="M-04"></div>
+                            <div id="M-05"></div>
+                            <div id="M-06"></div>
+                            <div id="M-07"></div>
+                            <div id="M-08"></div>
+                            <div id="M-09"></div>
+                            <div id="M-10"></div>
+                            <div id="M-11"></div>
+                            <div id="M-12"></div>
+                            <div id="M-13"></div>
+                            <div id="M-14"></div>
+                            <div id="M-15"></div>
+                        </td>
+                        <td>
+                            <div class="row_title h40"></div>
+                            <div class="row_title h40"></div>
+                            <div class="row_title h40"></div>
+                            <div class="row_title h40"></div>
+                            <div class="row_title h40"></div>
+                            <div class="row_title h40"></div>
+                            <div class="row_title h40"></div>
+                            <div class="row_title h40"></div>
+                            <div class="row_title h40"></div>
+                            <div class="row_title h40"></div>
+                            <div class="row_title h40"><div class="textNoticeBlue Y2 white" large>Exit</div></div>
+                            <div class="row_title h40"></div>
+                            <div class="row_title h40"></div>
+                            <div class="row_title h40"></div>
+                            <div class="row_title h40"></div>
+                            <div class="row_title h40"></div>
+                        </td>
+                    </tr>
+                    <tr alt="KV2 - 4 - Giới hạn dưới" class="row_title">
+                        <td>
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td>
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td>
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td>
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td>
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td>
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td>
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td>
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td>
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td>
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td>
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td>
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td>
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td>
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td>
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td>
+                            <div class="empty_Road"></div>
+                        </td>
+                        <td>
+                            <div class="empty_Road"></div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>

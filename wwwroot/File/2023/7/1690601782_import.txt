@@ -1,0 +1,77 @@
+làm import đơn vi x
+	   phòng ban x
+	   bộ phận x
+	   chức vụ x
+	   nhà cung cấp x
+           danh mục thiết bị x
+  	   thông tin thiết bị x
+
+hiển thị kho theo đơn vị, hiển thị tên đơn vị và người dùng trong kho
+fix số điện thoại ở nhà cung cấp (sdt người dùng)
+
+bàn giao vào kho thì người nhận null
+thêm báo cáo kho vào trong báo cáo controller
+
+public class PhanQuyenDonVi
+    {
+        public List<DonViViewModel> lst_DonVis { get; set; }
+        public Guid User_Id { get; set; }
+    }
+    public class User_PhanQuyen
+    {
+        public Guid DonVi_Id { get; set; }
+        public string FullName { get; set; }
+        public string Email { get; set; }
+        public bool IsFull { get; set; }
+    }
+    public class DonViViewModel
+    {
+        public Guid Id { get; set; }
+        public string MaDonVi { get; set; }
+        public string TenDonVi { get; set; }
+        public string STT { get; set; }
+        public bool IsUsed { set; get; }
+        public bool IsRemove { set; get; }
+        public Guid? Parent_Id { set; get; }
+        public int ThuTu { set; get; }
+        public bool Checked { set; get; }
+        public bool HasChild { set; get; }
+        public bool IsFull { get; set; }
+        public bool IsLeaf { get; set; }
+        public int Level { get; set; }
+        public List<DonViViewModel> children { set; get; }
+        public List<User_PhanQuyen> lst_user_phanquyen { set; get; }
+    }
+
+
+[HttpPost]
+public IActionResult ThemThietBi(ThietBiInputModel inputModel)
+{
+    // Xử lý logic lưu thiết bị vào cơ sở dữ liệu
+
+    // Lấy thông tin về loại thiết bị từ cơ sở dữ liệu
+    var loaiThietBi = dbContext.LoaiThietBi.FirstOrDefault(l => l.LoaiThietBiId == inputModel.LoaiThietBiId);
+
+    if (loaiThietBi != null)
+    {
+        if (loaiThietBi.LoaiNhapLieu == "Nhieu")
+        {
+            // Cho phép nhập số lượng nhiều
+        }
+        else if (loaiThietBi.LoaiNhapLieu == "Mot")
+        {
+            if (inputModel.SoLuong != 1)
+            {
+                ModelState.AddModelError("SoLuong", "Chỉ được phép nhập 1 thiết bị.");
+                // Hoặc xử lý lỗi theo ý muốn của bạn, ví dụ như gửi thông báo lỗi cho người dùng
+            }
+        }
+    }
+
+    // Xử lý logic lưu thiết bị vào cơ sở dữ liệu
+
+    return RedirectToAction("DanhSachThietBi");
+}
+
+
+	   

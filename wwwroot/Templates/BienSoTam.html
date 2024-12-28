@@ -1,0 +1,93 @@
+﻿<table  style=" padding-top:5px;padding-right: 5px;width: 85.6mm;height: 53.98mm;;margin: 5px;border: solid 1px;border-radius:2px;font-size:9pt;{14}"
+    cellspacing="0" cellpadding="1">
+    <tr>
+        <td style="text-align: left; vertical-align: top; font-size: 8pt; white-space: nowrap;">
+            Tên chủ xe:<br>
+            <b>{0}</b><br>
+            Địa chỉ:<br>
+            <b>{1}</b>
+        </td>
+        <td style="text-align: right; vertical-align: top; width: 90px;">
+            <div class="barcode" style="float: right; text-align: right;">
+                <div id='id_qrcode{9}'></div>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align: left; vertical-align: top; font-size: 8pt; white-space: nowrap;">
+            Nhãn hiệu: <span>{2}</span>
+        </td>
+        <td style="text-align: right; vertical-align: top; font-size: 8pt; white-space: nowrap;">
+            Số loại: <span style="text-transform: uppercase;">{14}</span>
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align: left; vertical-align: top; font-size: 8pt; white-space: nowrap;">
+            Loại xe: <span>{3}</span>
+        </td>
+        <td style="text-align: right; vertical-align: top; font-size: 8pt; white-space: nowrap;">
+            Màu sơn: <span>{6}</span>
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align: left; vertical-align: top; font-size: 8pt; white-space: nowrap;">
+            Số chỗ ngồi: <span>{15}</span>
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align: left; vertical-align: top; font-size: 8pt; white-space: nowrap;">
+            Số máy: <b style="text-transform: uppercase;">{4}</b>
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align: left; vertical-align: top; font-size: 8pt; white-space: nowrap;">
+            Số khung: <b style="text-transform: uppercase;">{5}</b>
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align: left; vertical-align: top; font-size: 8pt; white-space: nowrap;">
+            Phạm vi hoạt động: <span style="text-transform: uppercase;">{7}</span>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" style="text-align: left; vertical-align: top; font-size: 8pt;">
+            <div style="text-align: left; display: inline-block;">
+                <b>Biển số đăng ký</b><br>
+                <div>(Number Plate)</div>
+                <b style="font-size: 14pt; text-transform: uppercase;">{8}<span style="font-size: small; vertical-align: super;">(T)</span></b>
+            </div>
+            <div style="float: right;">
+                <div style="text-align: center;">
+                    Núi Thành, ngày {10} tháng {11} năm {12}<br>
+                    <b>TRƯỞNG CA HUYỆN</b>
+                </div>
+            </div>
+        </td>
+        <!-- <td style="text-align: left; vertical-align: top; font-size: 8pt;">
+            <div style="text-align: left;">
+                <b>Biển số đăng ký</b><br>
+                <div>(Number Plate)</div>
+            </div>
+            <b style="font-size: 14pt; text-transform: uppercase;">{8}<span style="font-size: small; vertical-align: super;">(T)</span></b>
+        </td>
+        <td style="text-align: center; vertical-align: top; font-size: 8pt; white-space: nowrap;">
+            Núi Thành, ngày {10} tháng {11} năm {12}<br>
+            <b>TRƯỞNG CA HUYỆN</b>
+        </td> -->
+    </tr>
+    <tr>
+        <td style="text-align: left; vertical-align: top; font-size: 8pt; white-space: nowrap;">
+            Giá trị đến ngày<br>(Date of expiry): <span>{13}</span>
+        </td>
+    </tr>
+  
+</table>
+^
+var qrcode$make$ = new QRCode('id_qrcode$make$', {
+    text: '$qrcode$',
+    width: 45,
+    height: 45,
+    colorDark: "#000000",
+    colorLight: "#ffffff",
+    correctLevel: QRCode.CorrectLevel.L
+});
