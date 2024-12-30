@@ -54,7 +54,7 @@ namespace ERP
       services.AddHttpClient("MyHttpClient");
       services.AddScoped<DownloadImage>();
       services.AddTransient<IUnitofWork, UnitofWork>();
-      services.AddHostedService<VehicleDataUpdateService>();
+      // services.AddHostedService<VehicleDataUpdateService>();
       services.AddScoped<VehicleService>();
       services.AddDbContext<MyDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
       services.AddIdentity<ApplicationUser, ApplicationRole>().AddEntityFrameworkStores<MyDbContext>().AddDefaultTokenProviders();

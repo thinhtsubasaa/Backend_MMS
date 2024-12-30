@@ -214,7 +214,7 @@ namespace ERP.Controllers
                 accessRole = role[0]; // Lấy vai trò đầu tiên từ danh sách roles
             }
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            _ = CallApiMMS(tokenHandler.WriteToken(token));
+            // _ = CallApiMMS(tokenHandler.WriteToken(token));
 
 
             return new InfoLogin()

@@ -249,6 +249,85 @@ namespace ERP.Models
         public List<string> lst_Lois { get; set; }
     }
 
+    public class ImportMMS_DM_DonVi
+    {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public string Name_Eng { get; set; }
+        public string Note { get; set; }
+        public string MaDV { get; set; }
+        public bool IsLoi { get; set; }
+        public List<string> lst_Lois { get; set; }
+    }
+    public class ImportMMS_DM_BoPhan
+    {
+        public Guid Id { get; set; }
+
+        public Guid? DonVi_Id { get; set; }
+
+        public string Name { get; set; }
+        public string Name_Eng { get; set; }
+        public string Note { get; set; }
+        public string MaBP { get; set; }
+        public bool IsLoi { get; set; }
+        public List<string> lst_Lois { get; set; }
+    }
+      public class ImportMMS_DM_Nhom
+    {
+       public Guid Id { get; set; }
+        public string Name { get; set; }
+        public string Name_Eng { get; set; }
+        public string Note { get; set; }        
+        public bool IsLoi { get; set; }
+        public List<string> lst_Lois { get; set; }
+    }
+     public class ImportMMS_DM_Loai
+    {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public string Code { get; set; }
+        public string Name_Eng { get; set; }
+        public string ThuocNhom { get; set; }
+        public string Note { get; set; }   
+        public bool IsLoi { get; set; }
+        public List<string> lst_Lois { get; set; }
+    }
+     public class ImportMMS_DM_Model
+    {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public string Option { get; set; }
+        public string Code { get; set; }
+        public string Name_Eng { get; set; }
+        public string Type { get; set; }
+        public string PairingAbility { get; set; }
+        public string KLBT { get; set; }
+        public string TTMK_KLHH { get; set; }
+        public string KLTB { get; set; }
+        public string KLKT { get; set; }
+        public string Note { get; set; }
+
+        public bool IsLoi { get; set; }
+        public List<string> lst_Lois { get; set; }
+    }
+     public class ImportMMS_DM_TinhTrang
+    {
+         public Guid Id { get; set; }
+        public string Name { get; set; }
+        public string Arrange { get; set; }
+
+        public bool IsLoi { get; set; }
+        public List<string> lst_Lois { get; set; }
+    }
+    public class ImportMMS_Status
+    {
+         public Guid Id { get; set; }
+        public string Name { get; set; }
+        public string Note { get; set; }
+
+        public bool IsLoi { get; set; }
+        public List<string> lst_Lois { get; set; }
+    }
     public class ImportKeHoachGiaoXeModel
     {
         public Guid? Id { get; set; }

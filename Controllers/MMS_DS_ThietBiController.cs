@@ -107,7 +107,6 @@ namespace ERP.Controllers
             string[] supportedTypes = new[] { "xls", "xlsx" };
             if (supportedTypes.Contains(fileExt))
             {
-
                 string webRootPath = environment.WebRootPath ?? Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
                 string fullPath = Path.Combine(webRootPath, fileName);
                 using (var stream = new FileStream(fullPath, FileMode.Create))
@@ -120,12 +119,12 @@ namespace ERP.Controllers
                 using (MemoryStream ms = new MemoryStream(file_byte))
                 using (ExcelPackage package = new ExcelPackage(ms))
                 {
-                    ExcelWorksheet worksheet = package.Workbook.Worksheets[1];
+                    ExcelWorksheet worksheet = package.Workbook.Worksheets[4];
                     int rowCount = worksheet.Dimension.Rows;
                     var list_datas = new List<ImportMMS_DS_ThietBi>();
                     for (int i = 2; i <= rowCount; i++)
                     {
-                        if (worksheet.Cells[i, 3].Value == null)
+                        if (worksheet.Cells[i, 1].Value == null)
                         {
                             // Nếu không có dữ liệu, dừng vòng lặp
                             break;
