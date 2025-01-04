@@ -43,7 +43,7 @@ namespace ERP.Controllers
                 ).Select(x => new
                 {
                     x.Id,
-                   x.MaBP,
+                    x.MaBP,
                 });
             if (page == -1)
             {
@@ -78,8 +78,8 @@ namespace ERP.Controllers
         [HttpGet("BoPhan")]
         public ActionResult GetTaiXe()
         {
-         
-            var data = uow.DM_BoPhans.GetAll(t => !t.IsDeleted 
+
+            var data = uow.DM_BoPhans.GetAll(t => !t.IsDeleted
                 ).Select(x => new
                 {
                     x.Id,
@@ -90,8 +90,8 @@ namespace ERP.Controllers
         }
 
 
-      
-       
+
+
 
         [HttpPost("Read_Excel")]
         public ActionResult Read_Excel(IFormFile file)
@@ -106,7 +106,11 @@ namespace ERP.Controllers
             if (supportedTypes.Contains(fileExt))
             {
 
-                string webRootPath = environment.WebRootPath ?? Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
+                string webRootPath = environment.WebRootPath;
+                if (string.IsNullOrWhiteSpace(webRootPath))
+                {
+                    webRootPath = Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
+                }
                 string fullPath = Path.Combine(webRootPath, fileName);
                 using (var stream = new FileStream(fullPath, FileMode.Create))
                 {
@@ -130,7 +134,7 @@ namespace ERP.Controllers
                         }
 
                         object MaBP = worksheet.Cells[i, 1].Value;
-                       
+
 
 
                         DateTime baseDate = new DateTime(1900, 1, 1);
@@ -138,11 +142,11 @@ namespace ERP.Controllers
                         var lst_Lois = new List<string>();
                         var info = new ImportMMS_DM_BoPhan();
                         info.Id = Guid.NewGuid();
-                        
 
 
 
-                       
+
+
 
                         if (string.IsNullOrEmpty(info.Name))
                         {
@@ -213,14 +217,14 @@ namespace ERP.Controllers
                 {
 
 
-                   
+
 
                     var exit = uow.DM_BoPhans.GetSingle(x => !x.IsDeleted && x.Name.ToLower() == item.Name.ToLower());
                     if (exit == null)
                     {
                         uow.DM_BoPhans.Add(new DM_BoPhan
                         {
-                           
+
                             CreatedDate = DateTime.Now,
                             CreatedBy = Guid.Parse(User.Identity.Name),
                         });
@@ -228,7 +232,7 @@ namespace ERP.Controllers
                     else
                     {
                         // var exit = uow.KeHoachGiaoXes.GetSingle(x => x.SoKhung.ToLower() == item.SoKhung.ToLower());
-                       
+
                         exit.UpdatedDate = DateTime.Now;
                         exit.UpdatedBy = Guid.Parse(User.Identity.Name);
                         uow.DM_BoPhans.Update(exit);

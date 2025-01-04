@@ -102,7 +102,11 @@ namespace ERP.Controllers
             if (supportedTypes.Contains(fileExt))
             {
 
-                string webRootPath = environment.WebRootPath ?? Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
+                string webRootPath = environment.WebRootPath;
+                if (string.IsNullOrWhiteSpace(webRootPath))
+                {
+                    webRootPath = Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
+                }
                 string fullPath = Path.Combine(webRootPath, fileName);
                 using (var stream = new FileStream(fullPath, FileMode.Create))
                 {

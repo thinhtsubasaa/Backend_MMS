@@ -104,7 +104,11 @@ namespace ERP.Controllers
             string[] supportedTypes = new[] { "xls", "xlsx" };
             if (supportedTypes.Contains(fileExt))
             {
-                string webRootPath = environment.WebRootPath ?? Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
+                string webRootPath = environment.WebRootPath;
+                if (string.IsNullOrWhiteSpace(webRootPath))
+                {
+                    webRootPath = Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
+                }
                 string fullPath = Path.Combine(webRootPath, fileName);
                 using (var stream = new FileStream(fullPath, FileMode.Create))
                 {
@@ -128,9 +132,9 @@ namespace ERP.Controllers
                         }
 
                         object MaTB = worksheet.Cells[i, 1].Value;
-                       
+
                         object Name = worksheet.Cells[i, 2].Value;
-                       
+
                         DateTime baseDate = new DateTime(1900, 1, 1);
                         int excelDate = 45329;
                         var lst_Lois = new List<string>();
@@ -208,7 +212,7 @@ namespace ERP.Controllers
                 {
 
 
-                   
+
 
                     var exit = uow.DM_DonVis.GetSingle(x => !x.IsDeleted && x.MaDV.ToLower() == item.MaDV.ToLower());
                     if (exit == null)
@@ -217,7 +221,7 @@ namespace ERP.Controllers
                         {
                             MaDV = item.MaDV,
                             Name = item.Name,
-                          
+
                             CreatedDate = DateTime.Now,
                             CreatedBy = Guid.Parse(User.Identity.Name),
                         });
@@ -225,9 +229,9 @@ namespace ERP.Controllers
                     else
                     {
                         // var exit = uow.KeHoachGiaoXes.GetSingle(x => x.SoKhung.ToLower() == item.SoKhung.ToLower());
-                      exit.MaDV = item.MaDV;
+                        exit.MaDV = item.MaDV;
                         exit.Name = item.Name;
-                       
+
                         exit.CreatedDate = DateTime.Now;
                         exit.CreatedBy = Guid.Parse(User.Identity.Name);
                         exit.UpdatedDate = DateTime.Now;

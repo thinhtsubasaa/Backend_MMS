@@ -102,7 +102,11 @@ namespace ERP.Controllers
             if (supportedTypes.Contains(fileExt))
             {
 
-                string webRootPath = environment.WebRootPath ?? Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
+                string webRootPath = environment.WebRootPath;
+                if (string.IsNullOrWhiteSpace(webRootPath))
+                {
+                    webRootPath = Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
+                }
                 string fullPath = Path.Combine(webRootPath, fileName);
                 using (var stream = new FileStream(fullPath, FileMode.Create))
                 {
@@ -144,10 +148,10 @@ namespace ERP.Controllers
                         info.Code = Code?.ToString().Trim().Replace("\t", "").Replace("\n", "") ?? "";
                         info.Option = Option?.ToString().Trim().Replace("\t", "").Replace("\n", "") ?? "";
                         info.Type = Type?.ToString().Trim().Replace("\t", "").Replace("\n", "") ?? "";
-                         info.KLBT = KLBT?.ToString().Trim().Replace("\t", "").Replace("\n", "") ?? "";
-                          info.TTMK_KLHH = TTMK?.ToString().Trim().Replace("\t", "").Replace("\n", "") ?? "";
-                           info.KLTB = KLTB?.ToString().Trim().Replace("\t", "").Replace("\n", "") ?? "";
-                            info.KLKT = KLKT?.ToString().Trim().Replace("\t", "").Replace("\n", "") ?? "";
+                        info.KLBT = KLBT?.ToString().Trim().Replace("\t", "").Replace("\n", "") ?? "";
+                        info.TTMK_KLHH = TTMK?.ToString().Trim().Replace("\t", "").Replace("\n", "") ?? "";
+                        info.KLTB = KLTB?.ToString().Trim().Replace("\t", "").Replace("\n", "") ?? "";
+                        info.KLKT = KLKT?.ToString().Trim().Replace("\t", "").Replace("\n", "") ?? "";
 
 
 
