@@ -114,7 +114,7 @@ namespace ERP.Controllers
                 using (MemoryStream ms = new MemoryStream(file_byte))
                 using (ExcelPackage package = new ExcelPackage(ms))
                 {
-                    ExcelWorksheet worksheet = package.Workbook.Worksheets[11];
+                    ExcelWorksheet worksheet = package.Workbook.Worksheets[12];
                     int rowCount = worksheet.Dimension.Rows;
                     var list_datas = new List<ImportMMS_DM_TinhTrang>();
                     for (int i = 2; i <= rowCount; i++)
@@ -138,11 +138,6 @@ namespace ERP.Controllers
                         info.Name = Name?.ToString().Trim().Replace("\t", "").Replace("\n", "") ?? "";
                         info.Arrange = Arrange?.ToString().Trim().Replace("\t", "").Replace("\n", "") ?? "";
                        
-
-
-
-
-
 
                         if (string.IsNullOrEmpty(info.Name))
                         {

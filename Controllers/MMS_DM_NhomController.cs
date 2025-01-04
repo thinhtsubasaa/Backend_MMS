@@ -114,7 +114,7 @@ namespace ERP.Controllers
                 using (MemoryStream ms = new MemoryStream(file_byte))
                 using (ExcelPackage package = new ExcelPackage(ms))
                 {
-                    ExcelWorksheet worksheet = package.Workbook.Worksheets[7];
+                    ExcelWorksheet worksheet = package.Workbook.Worksheets[8];
                     int rowCount = worksheet.Dimension.Rows;
                     var list_datas = new List<ImportMMS_DM_Nhom>();
                     for (int i = 2; i <= rowCount; i++)
@@ -209,8 +209,6 @@ namespace ERP.Controllers
 
                 foreach (var item in DH)
                 {
-
-
 
 
                     var exit = uow.DM_Nhoms.GetSingle(x => !x.IsDeleted && x.Name.ToLower() == item.Name.ToLower());

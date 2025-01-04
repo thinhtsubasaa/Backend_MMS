@@ -116,7 +116,7 @@ namespace ERP.Controllers
                 using (MemoryStream ms = new MemoryStream(file_byte))
                 using (ExcelPackage package = new ExcelPackage(ms))
                 {
-                    ExcelWorksheet worksheet = package.Workbook.Worksheets[5];
+                    ExcelWorksheet worksheet = package.Workbook.Worksheets[4];
                     int rowCount = worksheet.Dimension.Rows;
                     var list_datas = new List<ImportMMS_DM_DonVi>();
                     for (int i = 2; i <= rowCount; i++)
@@ -152,7 +152,6 @@ namespace ERP.Controllers
                         //         info.Id = exit.Id;
                         //     }
                         // }
-
 
                         info.lst_Lois = lst_Lois;
                         list_datas.Add(info);

@@ -79,22 +79,30 @@ namespace ERP.Controllers
                 });
             }
         }
-        [HttpGet("TaiXe")]
-        public ActionResult GetTaiXe(string keyword)
+        [HttpGet("PT")]
+        public ActionResult GetPT()
         {
-            if (keyword == null) keyword = "";
-            string[] include = { };
-            var data = uow.TaiXes.GetAll(t => !t.IsDeleted && (t.MaTaiXe.ToLower().Contains(keyword.ToLower()) || t.TenTaiXe.ToLower().Contains(keyword.ToLower())), null, include
+          
+            var data = uow.DS_PhuongTiens.GetAll(t => !t.IsDeleted, t => t.OrderByDescending(x => x.NgayBatDau)
                 ).Select(x => new
                 {
                     x.Id,
-                    x.MaTaiXe,
-                    x.TenTaiXe,
-                    x.HangBang,
-                    x.SoDienThoai,
-                    QrCode = Commons.EnCode(x.MaTaiXe),
-                    x.isVaoCong
-
+                    x.Model,
+                    x.Model_Option,
+                   x.BienSo1,
+                   x.BienSo2,
+                   x.DonViSuDung,
+                   x.KLBT,
+                   x.KLHH,
+                   x.KLKT,
+                   x.KLTB,
+                   x.TinhTrang,
+                   x.Note,
+                   x.Address_nearest,
+                   x.LoaiPT,
+                   x.MaPhuongTien,
+                   NgayBatDau = string.Format("{0:dd/MM/yyyy}", x.NgayBatDau),
+                  
                 });
             return Ok(data);
         }

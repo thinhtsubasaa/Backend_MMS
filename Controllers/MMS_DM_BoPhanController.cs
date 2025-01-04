@@ -14,6 +14,7 @@ using DocumentFormat.OpenXml.Presentation;
 using System.IO;
 using OfficeOpenXml;
 using System.Globalization;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Database;
 
 namespace ERP.Controllers
 {
@@ -42,7 +43,7 @@ namespace ERP.Controllers
             var data = uow.DM_BoPhans.GetAll(t => !t.IsDeleted
                 ).Select(x => new
                 {
-                    x.Id,
+                   x.Id,
                    x.MaBP,
                 });
             if (page == -1)
@@ -75,6 +76,7 @@ namespace ERP.Controllers
                 });
             }
         }
+
         [HttpGet("BoPhan")]
         public ActionResult GetTaiXe()
         {
@@ -88,10 +90,6 @@ namespace ERP.Controllers
                 });
             return Ok(data);
         }
-
-
-      
-       
 
         [HttpPost("Read_Excel")]
         public ActionResult Read_Excel(IFormFile file)
@@ -139,10 +137,6 @@ namespace ERP.Controllers
                         var info = new ImportMMS_DM_BoPhan();
                         info.Id = Guid.NewGuid();
                         
-
-
-
-                       
 
                         if (string.IsNullOrEmpty(info.Name))
                         {
@@ -243,13 +237,10 @@ namespace ERP.Controllers
         [HttpGet("GetById")]
         public ActionResult Get(Guid id)
         {
-            var query = uow.TaiXes.GetAll(x => x.Id == id).Select(x => new
+            var query = uow.DM_BoPhans.GetAll(x => x.Id == id).Select(x => new
             {
                 x.Id,
-                x.MaTaiXe,
-                x.TenTaiXe,
-                x.HangBang,
-                x.SoDienThoai
+                x.MaBP
             }).FirstOrDefault();
             if (query == null)
             {
@@ -259,7 +250,7 @@ namespace ERP.Controllers
         }
 
         [HttpPost]
-        public ActionResult Post(TaiXe data)
+        public ActionResult Post(DM_BoPhan data)
         {
             lock (Commons.LockObjectState)
             {
@@ -267,36 +258,33 @@ namespace ERP.Controllers
                 {
                     return BadRequest(ModelState);
                 }
-                if (uow.TaiXes.Exists(x => x.MaTaiXe == data.MaTaiXe && !x.IsDeleted))
-                    return StatusCode(StatusCodes.Status409Conflict, "Mã " + data.MaTaiXe + " đã tồn tại trong hệ thống");
-                else if (uow.TaiXes.Exists(x => x.MaTaiXe == data.MaTaiXe && x.IsDeleted))
+                if (uow.DM_BoPhans.Exists(x => x.MaBP == data.MaBP && !x.IsDeleted))
+                    return StatusCode(StatusCodes.Status409Conflict, "Mã " + data.MaBP+ " đã tồn tại trong hệ thống");
+                else if (uow.DM_BoPhans.Exists(x => x.MaBP == data.MaBP && x.IsDeleted))
                 {
 
-                    var d = uow.TaiXes.GetAll(x => x.MaTaiXe == data.MaTaiXe).FirstOrDefault();
+                    var d = uow.DM_BoPhans.GetAll(x => x.MaBP == data.MaBP).FirstOrDefault();
                     d.IsDeleted = false;
                     d.DeletedBy = null;
                     d.DeletedDate = null;
                     d.UpdatedBy = Guid.Parse(User.Identity.Name);
                     d.UpdatedDate = DateTime.Now;
-                    d.MaTaiXe = data.MaTaiXe;
-                    d.TenTaiXe = data.TenTaiXe;
-                    d.HangBang = data.HangBang;
-                    d.SoDienThoai = data.SoDienThoai;
-                    uow.TaiXes.Update(d);
+                    d.MaBP = data.MaBP;
+                    d.Name = data.Name;
+                  
+                    uow.DM_BoPhans.Update(d);
 
                 }
                 else
                 {
-                    TaiXe cv = new TaiXe();
+                    DM_BoPhan cv = new DM_BoPhan();
                     Guid id = Guid.NewGuid();
                     cv.Id = id;
-                    cv.MaTaiXe = data.MaTaiXe;
-                    cv.TenTaiXe = data.TenTaiXe;
-                    cv.HangBang = data.HangBang;
-                    cv.SoDienThoai = data.SoDienThoai;
+                   cv.Name = data.Name;
+                   cv.MaBP = data.MaBP;
                     cv.CreatedDate = DateTime.Now;
                     cv.CreatedBy = Guid.Parse(User.Identity.Name);
-                    uow.TaiXes.Add(cv);
+                    uow.DM_BoPhans.Add(cv);
                 }
 
                 uow.Complete();
@@ -305,7 +293,7 @@ namespace ERP.Controllers
         }
 
         [HttpPut]
-        public ActionResult Put(Guid id, TaiXe data)
+        public ActionResult Put(Guid id, DM_BoPhan data)
         {
             lock (Commons.LockObjectState)
             {
@@ -317,34 +305,32 @@ namespace ERP.Controllers
                 {
                     return BadRequest();
                 }
-                if (uow.TaiXes.Exists(x => x.MaTaiXe == data.MaTaiXe && x.Id != data.Id && !x.IsDeleted))
-                    return StatusCode(StatusCodes.Status409Conflict, "Mã " + data.MaTaiXe + " đã tồn tại trong hệ thống");
-                else if (uow.TaiXes.Exists(x => x.MaTaiXe == data.MaTaiXe && x.IsDeleted))
+                if (uow.DM_BoPhans.Exists(x => x.MaBP == data.MaBP && x.Id != data.Id && !x.IsDeleted))
+                    return StatusCode(StatusCodes.Status409Conflict, "Mã " + data.MaBP + " đã tồn tại trong hệ thống");
+                else if (uow.DM_BoPhans.Exists(x => x.MaBP == data.MaBP && x.IsDeleted))
                 {
 
-                    var d = uow.TaiXes.GetAll(x => x.MaTaiXe == data.MaTaiXe).FirstOrDefault();
+                    var d = uow.DM_BoPhans.GetAll(x => x.MaBP == data.MaBP).FirstOrDefault();
                     d.IsDeleted = false;
                     d.DeletedBy = null;
                     d.DeletedDate = null;
                     d.UpdatedBy = Guid.Parse(User.Identity.Name);
                     d.UpdatedDate = DateTime.Now;
-                    d.MaTaiXe = data.MaTaiXe;
-                    d.TenTaiXe = data.TenTaiXe;
-                    d.HangBang = data.HangBang;
-                    d.SoDienThoai = data.SoDienThoai;
-                    uow.TaiXes.Update(d);
+                    d.MaBP = data.MaBP;
+                    d.Name = data.Name;
+                   
+                    uow.DM_BoPhans.Update(d);
 
                 }
                 else
                 {
-                    var d = uow.TaiXes.GetAll(x => x.Id == id).FirstOrDefault();
+                    var d = uow.DM_BoPhans.GetAll(x => x.Id == id).FirstOrDefault();
                     d.UpdatedBy = Guid.Parse(User.Identity.Name);
                     d.UpdatedDate = DateTime.Now;
-                    d.MaTaiXe = data.MaTaiXe;
-                    d.TenTaiXe = data.TenTaiXe;
-                    d.HangBang = data.HangBang;
-                    d.SoDienThoai = data.SoDienThoai;
-                    uow.TaiXes.Update(d);
+                    d.MaBP = data.MaBP;
+                    d.Name = data.Name;
+                   
+                    uow.DM_BoPhans.Update(d);
                 }
 
                 uow.Complete();
@@ -357,7 +343,7 @@ namespace ERP.Controllers
         {
             lock (Commons.LockObjectState)
             {
-                TaiXe duLieu = uow.TaiXes.GetById(id);
+                DM_BoPhan duLieu = uow.DM_BoPhans.GetById(id);
 
                 if (duLieu == null)
                 {
@@ -366,7 +352,7 @@ namespace ERP.Controllers
                 duLieu.DeletedDate = DateTime.Now;
                 duLieu.DeletedBy = Guid.Parse(User.Identity.Name);
                 duLieu.IsDeleted = true;
-                uow.TaiXes.Update(duLieu);
+                uow.DM_BoPhans.Update(duLieu);
                 uow.Complete();
                 return Ok(duLieu);
             }

@@ -114,7 +114,7 @@ namespace ERP.Controllers
                 using (MemoryStream ms = new MemoryStream(file_byte))
                 using (ExcelPackage package = new ExcelPackage(ms))
                 {
-                    ExcelWorksheet worksheet = package.Workbook.Worksheets[9];
+                    ExcelWorksheet worksheet = package.Workbook.Worksheets[10];
                     int rowCount = worksheet.Dimension.Rows;
                     var list_datas = new List<ImportMMS_DM_Model>();
                     for (int i = 2; i <= rowCount; i++)
@@ -144,15 +144,10 @@ namespace ERP.Controllers
                         info.Code = Code?.ToString().Trim().Replace("\t", "").Replace("\n", "") ?? "";
                         info.Option = Option?.ToString().Trim().Replace("\t", "").Replace("\n", "") ?? "";
                         info.Type = Type?.ToString().Trim().Replace("\t", "").Replace("\n", "") ?? "";
-                         info.KLBT = KLBT?.ToString().Trim().Replace("\t", "").Replace("\n", "") ?? "";
-                          info.TTMK_KLHH = TTMK?.ToString().Trim().Replace("\t", "").Replace("\n", "") ?? "";
-                           info.KLTB = KLTB?.ToString().Trim().Replace("\t", "").Replace("\n", "") ?? "";
-                            info.KLKT = KLKT?.ToString().Trim().Replace("\t", "").Replace("\n", "") ?? "";
-
-
-
-
-
+                        info.KLBT = KLBT?.ToString().Trim().Replace("\t", "").Replace("\n", "") ?? "";
+                        info.TTMK_KLHH = TTMK?.ToString().Trim().Replace("\t", "").Replace("\n", "") ?? "";
+                        info.KLTB = KLTB?.ToString().Trim().Replace("\t", "").Replace("\n", "") ?? "";
+                        info.KLKT = KLKT?.ToString().Trim().Replace("\t", "").Replace("\n", "") ?? "";
 
                         if (string.IsNullOrEmpty(info.Name))
                         {
@@ -183,10 +178,10 @@ namespace ERP.Controllers
                         {
                             if (!string.IsNullOrEmpty(item.Name))
                             {
-                                if (DuplicateSoKhungs(list_datas.Where(x => x.Name == item.Name).ToList()) > 0)
+                                if (DuplicateSoKhungs(list_datas.Where(x => x.Option == item.Option).ToList()) > 0)
                                 {
                                     item.IsLoi = true;
-                                    item.lst_Lois.Add($"Số Khung {item.Name} bị trùng lặp");
+                                    item.lst_Lois.Add($"Số Khung {item.Option} bị trùng lặp");
                                 }
                             }
                         }
