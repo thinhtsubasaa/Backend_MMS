@@ -102,7 +102,11 @@ namespace ERP.Controllers
             if (supportedTypes.Contains(fileExt))
             {
 
-                string webRootPath = environment.WebRootPath ?? Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
+                string webRootPath = environment.WebRootPath;
+                if (string.IsNullOrWhiteSpace(webRootPath))
+                {
+                    webRootPath = Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
+                }
                 string fullPath = Path.Combine(webRootPath, fileName);
                 using (var stream = new FileStream(fullPath, FileMode.Create))
                 {
@@ -126,7 +130,7 @@ namespace ERP.Controllers
                         }
 
                         object Name = worksheet.Cells[i, 1].Value;
-                       
+
                         object Arrange = worksheet.Cells[i, 3].Value;
 
 
@@ -137,7 +141,7 @@ namespace ERP.Controllers
                         info.Id = Guid.NewGuid();
                         info.Name = Name?.ToString().Trim().Replace("\t", "").Replace("\n", "") ?? "";
                         info.Arrange = Arrange?.ToString().Trim().Replace("\t", "").Replace("\n", "") ?? "";
-                       
+
 
                         if (string.IsNullOrEmpty(info.Name))
                         {
@@ -213,16 +217,16 @@ namespace ERP.Controllers
                         uow.DM_TinhTrangs.Add(new DM_TinhTrang
                         {
                             Name = item.Name,
-                           Arrange = item.Arrange,
+                            Arrange = item.Arrange,
                             CreatedDate = DateTime.Now,
                             CreatedBy = Guid.Parse(User.Identity.Name),
                         });
                     }
                     else
                     {
-                       
+
                         exit.Name = item.Name;
-                       exit.Arrange = item.Arrange;
+                        exit.Arrange = item.Arrange;
                         exit.UpdatedDate = DateTime.Now;
                         exit.UpdatedBy = Guid.Parse(User.Identity.Name);
                         uow.DM_TinhTrangs.Update(exit);
