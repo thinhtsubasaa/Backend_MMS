@@ -43,7 +43,6 @@ namespace ERP.Controllers
                 ).Select(x => new
                 {
                     x.Id,
-
                     x.TinhTrang,
                 });
             if (page == -1)
@@ -76,29 +75,108 @@ namespace ERP.Controllers
                 });
             }
         }
+
         [HttpGet("ThietBi")]
-        public ActionResult GetTaiXe()
+        public ActionResult GetTaiXe(string keyword = null)
         {
-
+            string[] include = { "PhuongTien" };
+            var lichsu = uow.GhepNoiPhuongTien_ThietBis.GetAll(x => !x.IsDeleted, x => x.OrderByDescending(x => x.CreatedDate), include);
+            string[] includes = { "DM_Loai", "DM_Model", "DM_TinhTrang" };
             var data = uow.DS_Thietbis.GetAll(t => !t.IsDeleted
-                ).Select(x => new
-                {
-                    x.Id,
+            && (string.IsNullOrEmpty(keyword) || t.MaCode_BienSo1.ToLower().Contains(keyword.ToLower())
+            || t.MaThietBi.Contains(keyword.ToUpper())), null, includes).Select(x => new
+            {
+                x.Id,
+                x.MaThietBi,
+                BienSo1 = x.MaCode_BienSo1,
+                BienSo2 = x.MaCode_BienSo2,
+                TenThietBi = x.Name,
+                x.Name,
+                Model = x.DM_Model?.Name,
+                x.DM_Model?.Option,
+                x.Model_Id,
+                LoaiTB = x.DM_Loai?.Name,
+                x.ThoiGianSuDung,
+                x.ThoiGian_NgayBaoDuong,
+                x.LoaiTB_Id,
+                TinhTrang = x.DM_TinhTrang?.Name,
 
-                    x.LoaiTB,
-
-                });
+                PhanBo = lichsu.Where(t => t.ThietBi_Id == x.Id || t.ThietBi2_Id == x.Id)?.FirstOrDefault()?.PhuongTien?.BienSo1,
+            });
             return Ok(data);
         }
 
 
+        [HttpGet("GetById")]
+        public ActionResult Get(Guid id)
+        {
+            string[] includes = { "DM_Loai", "DM_Model", "DM_TinhTrang" };
+            var query = uow.DS_Thietbis.GetAll(x => x.Id == id, null, includes).Select(x => new
+            {
+                x.Id,
+                x.MaThietBi,
+                x.MaCode_BienSo1,
+                x.MaCode_BienSo2,
+                TenThietBi = x.Name,
+                x.Name,
+                Model = x.DM_Model?.Name,
+                x.DM_Model?.Option,
+                x.PhanBo,
+                LoaiTB = x.DM_Loai?.Name,
+                x.Model_Id,
+                x.ThoiGianSuDung,
+                x.LoaiTB_Id,
+                x.TinhTrang_Id,
+                TinhTrang = x.DM_TinhTrang?.Name,
+            }).FirstOrDefault();
+            if (query == null)
+            {
+                return NotFound();
+            }
+            return Ok(query);
+        }
+        [HttpGet("All")]
+        public ActionResult GetAll(string keyword = null)
+        {
+            string[] includes = { "DM_Model", "DM_Loai", "DM_TinhTrang", "LichSuBaoDuong" };
+            string[] include = { "DM_TanSuat" };
+            var model = uow.DM_Models.GetAll(x => !x.IsDeleted, null, include);
+            var data = uow.DS_Thietbis.GetAll(t => !t.IsDeleted
+                && (string.IsNullOrEmpty(keyword) || t.Name.ToLower().Contains(keyword.ToLower())
+                || t.MaThietBi.ToLower().Contains(keyword.ToLower())),
+                t => t.OrderByDescending(x => x.DM_TinhTrang.Arrange), includes)
+                .Select(x =>
+                {
+                    var dinhmuc = model.Where(t => t.Id == x.Model_Id)?.FirstOrDefault()?.DM_TanSuat?.GiaTri;
+                    int giaTriDinhMuc = 0;
+                    if (!string.IsNullOrEmpty(dinhmuc) && int.TryParse(dinhmuc, out int parsedValue))
+                    {
+                        giaTriDinhMuc = parsedValue;
+                    }
+                    return new
+                    {
+                        x.Id,
+                        x.Name,
+                        x.MaThietBi,
+                        Model = x.DM_Model?.Name,
+                        x.DM_Model?.Option,
+                        x?.Model_Id,
+                        x?.TinhTrang_Id,
+                        TinhTrang = x.DM_TinhTrang?.Name,
+                        x.Note,
+                        x.ThoiGianSuDung,
+                        LoaiPT = x.DM_Loai?.Name,
+                        IsYeuCau = x.LichSuBaoDuong?.IsYeuCau ?? false,
+                        IsDenHan = giaTriDinhMuc > 0 && x.ThoiGianSuDung >= giaTriDinhMuc,
+                    };
+                });
 
-
+            return Ok(data);
+        }
 
         [HttpPost("Read_Excel")]
         public ActionResult Read_Excel(IFormFile file)
         {
-
             var timeSpan = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0));
             DateTime dt = DateTime.Now;
             // Rename file
@@ -107,6 +185,8 @@ namespace ERP.Controllers
             string[] supportedTypes = new[] { "xls", "xlsx" };
             if (supportedTypes.Contains(fileExt))
             {
+                var loai = uow.DM_Loais.GetAll(x => !x.IsDeleted);
+                var model = uow.DM_Models.GetAll(x => !x.IsDeleted);
                 string webRootPath = environment.WebRootPath ?? Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
                 string fullPath = Path.Combine(webRootPath, fileName);
                 using (var stream = new FileStream(fullPath, FileMode.Create))
@@ -119,7 +199,7 @@ namespace ERP.Controllers
                 using (MemoryStream ms = new MemoryStream(file_byte))
                 using (ExcelPackage package = new ExcelPackage(ms))
                 {
-                    ExcelWorksheet worksheet = package.Workbook.Worksheets[4];
+                    ExcelWorksheet worksheet = package.Workbook.Worksheets[5];
                     int rowCount = worksheet.Dimension.Rows;
                     var list_datas = new List<ImportMMS_DS_ThietBi>();
                     for (int i = 2; i <= rowCount; i++)
@@ -200,16 +280,47 @@ namespace ERP.Controllers
                             info.IsLoi = true;
                             lst_Lois.Add("Mã phương tiện không được để trống");
                         }
+                        if (string.IsNullOrEmpty(info.LoaiTB))
+                        {
+                            info.IsLoi = true;
+                            lst_Lois.Add("Loại TB không được để trống");
+                        }
+                        else
+                        {
+                            var info_loaiTB = loai.Where(x => x.Name.ToLower() == info.LoaiTB.ToLower()).FirstOrDefault();
+                            if (info_loaiTB == null)
+                            {
+                                info.IsLoi = true;
+                                lst_Lois.Add("Chưa tạo loại TB trong danh mục Loại");
+                            }
+                            else
+                            {
+                                info.LoaiTB_Id = info_loaiTB.Id;
+
+                            }
+
+                        }
+
+                        // if (string.IsNullOrEmpty(info.Model))
+                        // {
+                        //     info.IsLoi = true;
+                        //     lst_Lois.Add("Model không được để trống");
+                        // }
                         // else
                         // {
-                        //     var exit = lst_Datas.Where(a => a.SoKhung.ToLower().Trim() == info.SoKhung.ToLower().Trim()).FirstOrDefault();
-                        //     if (exit != null)
+                        //     var info_model = model.Where(x => x.Name.ToLower() == info.Model.ToLower()).FirstOrDefault();
+                        //     if (info_model == null)
                         //     {
-                        //         info.Id = exit.Id;
+                        //         info.IsLoi = true;
+                        //         lst_Lois.Add("Chưa tạo model trong danh mục");
                         //     }
+                        //     else
+                        //     {
+                        //         info.Model_Id = info_model.Id;
+
+                        //     }
+
                         // }
-
-
                         info.lst_Lois = lst_Lois;
                         list_datas.Add(info);
                     }
@@ -263,7 +374,6 @@ namespace ERP.Controllers
                 foreach (var item in DH)
                 {
 
-
                     DateTime? ngayBatDau = null;
                     if (DateTime.TryParseExact(item.NgayBatDau, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime tempNgayDenKV))
                     {
@@ -279,11 +389,13 @@ namespace ERP.Controllers
                             MaCode_BienSo1 = item.MaCode_BienSo1,
                             MaCode_BienSo2 = item.MaCode_BienSo2,
                             Name = item.Name,
+                            LoaiTB_Id = item.LoaiTB_Id,
                             TinhTrang = item.TinhTrang,
                             NgayBatDau = ngayBatDau,
                             LoaiTB = item.LoaiTB,
                             Model = item.Model,
                             PhanBo = item.PhanBo,
+                            Model_Id = item.Model_Id,
                             ViTri = item.ViTri,
                             ViTri_Lat = item.ViTri_Lat,
                             ViTri_Long = item.ViTri_Long,
@@ -297,6 +409,8 @@ namespace ERP.Controllers
                         exit.MaThietBi = item.MaThietBi;
                         exit.MaCode_BienSo1 = item.MaCode_BienSo1;
                         exit.MaCode_BienSo2 = item.MaCode_BienSo2;
+                        exit.LoaiTB_Id = item.LoaiTB_Id;
+                        exit.Model_Id = item.Model_Id;
                         exit.Name = item.Name;
                         exit.TinhTrang = item.TinhTrang;
                         exit.NgayBatDau = ngayBatDau;
@@ -319,26 +433,25 @@ namespace ERP.Controllers
             }
         }
 
-        [HttpGet("GetById")]
-        public ActionResult Get(Guid id)
+        [HttpGet("FileMau")]
+        public ActionResult FileMauTM_DB()
         {
-            var query = uow.TaiXes.GetAll(x => x.Id == id).Select(x => new
+            string fullFilePath = Path.Combine(Directory.GetParent(environment.ContentRootPath).FullName, "Uploads/Templates/FileMau_DS_ThietBi.xlsx");
+            string fileName = "FileMau_DS_ThietBi_" + DateTime.Now.ToString("HHmmss") + ".xlsx";
+            using (ExcelPackage package = new ExcelPackage(new FileInfo(fullFilePath)))
             {
-                x.Id,
-                x.MaTaiXe,
-                x.TenTaiXe,
-                x.HangBang,
-                x.SoDienThoai
-            }).FirstOrDefault();
-            if (query == null)
-            {
-                return NotFound();
+                if (package.Workbook.Worksheets.Count == 0)
+                {
+                    package.Workbook.Worksheets.Add("Sheet1");
+                }
+                ExcelWorksheet worksheet = package.Workbook.Worksheets[1];
+
+                return Ok(new { data = package.GetAsByteArray(), fileName });
             }
-            return Ok(query);
         }
 
         [HttpPost]
-        public ActionResult Post(TaiXe data)
+        public ActionResult Post(DS_ThietBi data)
         {
             lock (Commons.LockObjectState)
             {
@@ -346,36 +459,47 @@ namespace ERP.Controllers
                 {
                     return BadRequest(ModelState);
                 }
-                if (uow.TaiXes.Exists(x => x.MaTaiXe == data.MaTaiXe && !x.IsDeleted))
-                    return StatusCode(StatusCodes.Status409Conflict, "Mã " + data.MaTaiXe + " đã tồn tại trong hệ thống");
-                else if (uow.TaiXes.Exists(x => x.MaTaiXe == data.MaTaiXe && x.IsDeleted))
+                if (uow.DS_Thietbis.Exists(x => x.MaThietBi == data.MaThietBi && !x.IsDeleted))
+                    return StatusCode(StatusCodes.Status409Conflict, "Mã " + data.MaThietBi + " đã tồn tại trong hệ thống");
+                else if (uow.DS_Thietbis.Exists(x => x.MaThietBi == data.MaThietBi && x.IsDeleted))
                 {
 
-                    var d = uow.TaiXes.GetAll(x => x.MaTaiXe == data.MaTaiXe).FirstOrDefault();
+                    var d = uow.DS_Thietbis.GetAll(x => x.MaThietBi == data.MaThietBi).FirstOrDefault();
                     d.IsDeleted = false;
                     d.DeletedBy = null;
                     d.DeletedDate = null;
                     d.UpdatedBy = Guid.Parse(User.Identity.Name);
                     d.UpdatedDate = DateTime.Now;
-                    d.MaTaiXe = data.MaTaiXe;
-                    d.TenTaiXe = data.TenTaiXe;
-                    d.HangBang = data.HangBang;
-                    d.SoDienThoai = data.SoDienThoai;
-                    uow.TaiXes.Update(d);
+                    d.Name = data.Name;
+                    d.LoaiTB_Id = data.LoaiTB_Id;
+                    d.Model_Id = data.Model_Id;
+                    d.MaCode_BienSo1 = data.MaCode_BienSo1;
+                    d.MaThietBi = data.MaThietBi;
+                    d.MaCode_BienSo2 = data.MaCode_BienSo2;
+                    d.Model = data.Model;
+                    d.PhanBo = data.PhanBo;
+
+                    uow.DS_Thietbis.Update(d);
 
                 }
                 else
                 {
-                    TaiXe cv = new TaiXe();
+                    DS_ThietBi cv = new DS_ThietBi();
                     Guid id = Guid.NewGuid();
                     cv.Id = id;
-                    cv.MaTaiXe = data.MaTaiXe;
-                    cv.TenTaiXe = data.TenTaiXe;
-                    cv.HangBang = data.HangBang;
-                    cv.SoDienThoai = data.SoDienThoai;
+                    cv.LoaiTB_Id = data.LoaiTB_Id;
+                    cv.Model_Id = data.Model_Id;
+                    cv.MaCode_BienSo1 = data.MaCode_BienSo1;
+                    cv.MaThietBi = data.MaThietBi;
+                    cv.ThoiGianSuDung = data.ThoiGianSuDung;
+                    cv.MaCode_BienSo2 = data.MaCode_BienSo2;
+                    cv.TinhTrang_Id = data.TinhTrang_Id;
+                    cv.Name = data.Name;
+                    cv.Model = data.Model;
+                    cv.PhanBo = data.PhanBo;
                     cv.CreatedDate = DateTime.Now;
                     cv.CreatedBy = Guid.Parse(User.Identity.Name);
-                    uow.TaiXes.Add(cv);
+                    uow.DS_Thietbis.Add(cv);
                 }
 
                 uow.Complete();
@@ -383,8 +507,9 @@ namespace ERP.Controllers
             }
         }
 
+
         [HttpPut]
-        public ActionResult Put(Guid id, TaiXe data)
+        public ActionResult Put(Guid id, DS_ThietBi duLieu)
         {
             lock (Commons.LockObjectState)
             {
@@ -392,41 +517,15 @@ namespace ERP.Controllers
                 {
                     return BadRequest(ModelState);
                 }
-                if (id != data.Id)
+                if (id != duLieu.Id)
                 {
                     return BadRequest();
                 }
-                if (uow.TaiXes.Exists(x => x.MaTaiXe == data.MaTaiXe && x.Id != data.Id && !x.IsDeleted))
-                    return StatusCode(StatusCodes.Status409Conflict, "Mã " + data.MaTaiXe + " đã tồn tại trong hệ thống");
-                else if (uow.TaiXes.Exists(x => x.MaTaiXe == data.MaTaiXe && x.IsDeleted))
-                {
-
-                    var d = uow.TaiXes.GetAll(x => x.MaTaiXe == data.MaTaiXe).FirstOrDefault();
-                    d.IsDeleted = false;
-                    d.DeletedBy = null;
-                    d.DeletedDate = null;
-                    d.UpdatedBy = Guid.Parse(User.Identity.Name);
-                    d.UpdatedDate = DateTime.Now;
-                    d.MaTaiXe = data.MaTaiXe;
-                    d.TenTaiXe = data.TenTaiXe;
-                    d.HangBang = data.HangBang;
-                    d.SoDienThoai = data.SoDienThoai;
-                    uow.TaiXes.Update(d);
-
-                }
-                else
-                {
-                    var d = uow.TaiXes.GetAll(x => x.Id == id).FirstOrDefault();
-                    d.UpdatedBy = Guid.Parse(User.Identity.Name);
-                    d.UpdatedDate = DateTime.Now;
-                    d.MaTaiXe = data.MaTaiXe;
-                    d.TenTaiXe = data.TenTaiXe;
-                    d.HangBang = data.HangBang;
-                    d.SoDienThoai = data.SoDienThoai;
-                    uow.TaiXes.Update(d);
-                }
-
+                duLieu.UpdatedBy = Guid.Parse(User.Identity.Name);
+                duLieu.UpdatedDate = DateTime.Now;
+                uow.DS_Thietbis.Update(duLieu);
                 uow.Complete();
+                //Ghi log truy cập
                 return StatusCode(StatusCodes.Status204NoContent);
             }
         }
@@ -436,7 +535,7 @@ namespace ERP.Controllers
         {
             lock (Commons.LockObjectState)
             {
-                TaiXe duLieu = uow.TaiXes.GetById(id);
+                DS_ThietBi duLieu = uow.DS_Thietbis.GetById(id);
 
                 if (duLieu == null)
                 {
@@ -445,7 +544,7 @@ namespace ERP.Controllers
                 duLieu.DeletedDate = DateTime.Now;
                 duLieu.DeletedBy = Guid.Parse(User.Identity.Name);
                 duLieu.IsDeleted = true;
-                uow.TaiXes.Update(duLieu);
+                uow.DS_Thietbis.Update(duLieu);
                 uow.Complete();
                 return Ok(duLieu);
             }

@@ -28,5 +28,33 @@ namespace ERP.Models
         public string ViTri_Lat { get; set; }
         public string ViTri_Long { get; set; }
         public string MaPhuongTien { get; set; }
+        [ForeignKey("DM_Model")]
+        public Guid? Model_Id { get; set; }
+        public DM_Model DM_Model { get; set; }
+
+        public Guid? DonVi_Id { get; set; }
+
+        [ForeignKey("DM_Loai")]
+        public Guid? LoaiPT_Id { get; set; }
+        public DM_Loai DM_Loai { get; set; }
+        [ForeignKey("DM_TinhTrang")]
+        public Guid? TinhTrang_Id { get; set; }
+        public DM_TinhTrang DM_TinhTrang { get; set; }
+        public int SoKM { get; set; }
+        public int SoChuyenXe { get; set; }
+        public string SoKhung { get; set; }
+        public Guid? BoPhan_Id { get; set; }
+        public int SoKM_Adsun { get; set; }
+        public int TongSoKM_Adsun { get; set; }
+        [ForeignKey("LichSuBaoDuong")]
+        public Guid? LichSuBaoDuong_Id { get; set; }
+        public LichSuBaoDuong LichSuBaoDuong { get; set; }
+        [ForeignKey("MMS_PhuTrachBoPhan")]
+        public Guid? PhuTrachBoPhan_Id { get; set; }
+        public MMS_PhuTrachBoPhan PhuTrachBoPhan { get; set; }
+        public int SoKM_NgayBaoDuong { get; set; }
+
+
     }
+
 }

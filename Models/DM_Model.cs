@@ -22,6 +22,11 @@ namespace ERP.Models
         public string KLKT { get; set; }
         public string Note { get; set; }
         public string HinhAnh { get; set; }
+        public string TanSuat { get; set; }
+        public int GiaTri { get; set; }
+        [ForeignKey("DM_TanSuat")]
+        public Guid? TanSuat_Id { get; set; }
+        public DM_TanSuat DM_TanSuat { get; set; }
 
     }
 }

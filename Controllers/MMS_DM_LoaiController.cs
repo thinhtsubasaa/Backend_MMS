@@ -78,12 +78,15 @@ namespace ERP.Controllers
         [HttpGet("Loai")]
         public ActionResult GetTaiXe()
         {
-
-            var data = uow.DM_Loais.GetAll(t => !t.IsDeleted
+            string[] includes = { "DM_Nhom" };
+            var data = uow.DM_Loais.GetAll(t => !t.IsDeleted, null, includes
                 ).Select(x => new
                 {
                     x.Id,
-                    x.Name,
+                    TenLoai = x.Name,
+                    ThuocNhom = x.DM_Nhom?.Name,
+                    MaLoai = x.Code,
+                    x.Note,
 
                 });
             return Ok(data);
@@ -101,7 +104,7 @@ namespace ERP.Controllers
             string[] supportedTypes = new[] { "xls", "xlsx" };
             if (supportedTypes.Contains(fileExt))
             {
-
+                var Nhom = uow.DM_Nhoms.GetAll(x => !x.IsDeleted);
                 string webRootPath = environment.WebRootPath;
                 if (string.IsNullOrWhiteSpace(webRootPath))
                 {
@@ -144,26 +147,31 @@ namespace ERP.Controllers
                         info.ThuocNhom = ThuocNhom?.ToString().Trim().Replace("\t", "").Replace("\n", "") ?? "";
                         info.Note = Note?.ToString().Trim().Replace("\t", "").Replace("\n", "") ?? "";
 
-
-
-
-
-
                         if (string.IsNullOrEmpty(info.Name))
                         {
                             info.IsLoi = true;
                             lst_Lois.Add("Mã phương tiện không được để trống");
                         }
-                        // else
-                        // {
-                        //     var exit = lst_Datas.Where(a => a.SoKhung.ToLower().Trim() == info.SoKhung.ToLower().Trim()).FirstOrDefault();
-                        //     if (exit != null)
-                        //     {
-                        //         info.Id = exit.Id;
-                        //     }
-                        // }
+                        if (string.IsNullOrEmpty(info.ThuocNhom))
+                        {
+                            info.IsLoi = true;
+                            lst_Lois.Add("Nhóm không được để trống");
+                        }
+                        else
+                        {
+                            var info_Nhom = Nhom.Where(x => x.Name.ToLower() == info.ThuocNhom.ToLower()).FirstOrDefault();
+                            if (info_Nhom == null)
+                            {
+                                info.IsLoi = true;
+                                lst_Lois.Add("Chưa tạo nhóm trong danh mục Nhóm");
+                            }
+                            else
+                            {
+                                info.Nhom_Id = info_Nhom.Id;
 
+                            }
 
+                        }
                         info.lst_Lois = lst_Lois;
                         list_datas.Add(info);
                     }
@@ -226,6 +234,7 @@ namespace ERP.Controllers
                             Note = item.Note,
                             ThuocNhom = item.ThuocNhom,
                             Code = item.Code,
+                            Nhom_Id = item.Nhom_Id,
                             CreatedDate = DateTime.Now,
                             CreatedBy = Guid.Parse(User.Identity.Name),
                         });
@@ -236,6 +245,7 @@ namespace ERP.Controllers
                         exit.ThuocNhom = item.ThuocNhom;
                         exit.Name = item.Name;
                         exit.Note = item.Note;
+                        exit.Nhom_Id = item.Nhom_Id;
                         exit.UpdatedDate = DateTime.Now;
                         exit.UpdatedBy = Guid.Parse(User.Identity.Name);
                         uow.DM_Loais.Update(exit);
@@ -246,17 +256,36 @@ namespace ERP.Controllers
                 return StatusCode(StatusCodes.Status200OK);
             }
         }
+        [HttpGet("FileMau")]
+        public ActionResult FileMauTM_DB()
+        {
+            string fullFilePath = Path.Combine(Directory.GetParent(environment.ContentRootPath).FullName, "Uploads/Templates/FileMau_DM_Loai.xlsx");
+            string fileName = "FileMau_DM_Loai_" + DateTime.Now.ToString("HHmmss") + ".xlsx";
+            using (ExcelPackage package = new ExcelPackage(new FileInfo(fullFilePath)))
+            {
+                if (package.Workbook.Worksheets.Count == 0)
+                {
+                    package.Workbook.Worksheets.Add("Sheet1");
+                }
+                ExcelWorksheet worksheet = package.Workbook.Worksheets[1];
+
+
+                return Ok(new { data = package.GetAsByteArray(), fileName });
+            }
+        }
 
         [HttpGet("GetById")]
         public ActionResult Get(Guid id)
         {
-            var query = uow.TaiXes.GetAll(x => x.Id == id).Select(x => new
+            string[] includes = { "DM_Nhom" };
+            var query = uow.DM_Loais.GetAll(x => x.Id == id, null, includes).Select(x => new
             {
                 x.Id,
-                x.MaTaiXe,
-                x.TenTaiXe,
-                x.HangBang,
-                x.SoDienThoai
+
+                x.Name,
+                x.Code,
+                ThuocNhom = x.DM_Nhom?.Name,
+                x.Nhom_Id,
             }).FirstOrDefault();
             if (query == null)
             {
@@ -266,7 +295,7 @@ namespace ERP.Controllers
         }
 
         [HttpPost]
-        public ActionResult Post(TaiXe data)
+        public ActionResult Post(DM_Loai data)
         {
             lock (Commons.LockObjectState)
             {
@@ -274,36 +303,36 @@ namespace ERP.Controllers
                 {
                     return BadRequest(ModelState);
                 }
-                if (uow.TaiXes.Exists(x => x.MaTaiXe == data.MaTaiXe && !x.IsDeleted))
-                    return StatusCode(StatusCodes.Status409Conflict, "Mã " + data.MaTaiXe + " đã tồn tại trong hệ thống");
-                else if (uow.TaiXes.Exists(x => x.MaTaiXe == data.MaTaiXe && x.IsDeleted))
+                if (uow.DM_Loais.Exists(x => x.Name == data.Name && !x.IsDeleted))
+                    return StatusCode(StatusCodes.Status409Conflict, "Mã " + data.Name + " đã tồn tại trong hệ thống");
+                else if (uow.DM_Loais.Exists(x => x.Name == data.Name && x.IsDeleted))
                 {
 
-                    var d = uow.TaiXes.GetAll(x => x.MaTaiXe == data.MaTaiXe).FirstOrDefault();
+                    var d = uow.DM_Loais.GetAll(x => x.Name == data.Name).FirstOrDefault();
                     d.IsDeleted = false;
                     d.DeletedBy = null;
                     d.DeletedDate = null;
                     d.UpdatedBy = Guid.Parse(User.Identity.Name);
                     d.UpdatedDate = DateTime.Now;
-                    d.MaTaiXe = data.MaTaiXe;
-                    d.TenTaiXe = data.TenTaiXe;
-                    d.HangBang = data.HangBang;
-                    d.SoDienThoai = data.SoDienThoai;
-                    uow.TaiXes.Update(d);
+                    d.Name = data.Name;
+                    d.Code = data.Code;
+                    d.ThuocNhom = data.ThuocNhom;
+                    d.Nhom_Id = data.Nhom_Id;
+                    uow.DM_Loais.Update(d);
 
                 }
                 else
                 {
-                    TaiXe cv = new TaiXe();
+                    DM_Loai cv = new DM_Loai();
                     Guid id = Guid.NewGuid();
                     cv.Id = id;
-                    cv.MaTaiXe = data.MaTaiXe;
-                    cv.TenTaiXe = data.TenTaiXe;
-                    cv.HangBang = data.HangBang;
-                    cv.SoDienThoai = data.SoDienThoai;
+                    cv.Name = data.Name;
+                    cv.Code = data.Code;
+                    cv.ThuocNhom = data.ThuocNhom;
+                    cv.Nhom_Id = data.Nhom_Id;
                     cv.CreatedDate = DateTime.Now;
                     cv.CreatedBy = Guid.Parse(User.Identity.Name);
-                    uow.TaiXes.Add(cv);
+                    uow.DM_Loais.Add(cv);
                 }
 
                 uow.Complete();
@@ -312,7 +341,7 @@ namespace ERP.Controllers
         }
 
         [HttpPut]
-        public ActionResult Put(Guid id, TaiXe data)
+        public ActionResult Put(Guid id, DM_Loai duLieu)
         {
             lock (Commons.LockObjectState)
             {
@@ -320,41 +349,15 @@ namespace ERP.Controllers
                 {
                     return BadRequest(ModelState);
                 }
-                if (id != data.Id)
+                if (id != duLieu.Id)
                 {
                     return BadRequest();
                 }
-                if (uow.TaiXes.Exists(x => x.MaTaiXe == data.MaTaiXe && x.Id != data.Id && !x.IsDeleted))
-                    return StatusCode(StatusCodes.Status409Conflict, "Mã " + data.MaTaiXe + " đã tồn tại trong hệ thống");
-                else if (uow.TaiXes.Exists(x => x.MaTaiXe == data.MaTaiXe && x.IsDeleted))
-                {
-
-                    var d = uow.TaiXes.GetAll(x => x.MaTaiXe == data.MaTaiXe).FirstOrDefault();
-                    d.IsDeleted = false;
-                    d.DeletedBy = null;
-                    d.DeletedDate = null;
-                    d.UpdatedBy = Guid.Parse(User.Identity.Name);
-                    d.UpdatedDate = DateTime.Now;
-                    d.MaTaiXe = data.MaTaiXe;
-                    d.TenTaiXe = data.TenTaiXe;
-                    d.HangBang = data.HangBang;
-                    d.SoDienThoai = data.SoDienThoai;
-                    uow.TaiXes.Update(d);
-
-                }
-                else
-                {
-                    var d = uow.TaiXes.GetAll(x => x.Id == id).FirstOrDefault();
-                    d.UpdatedBy = Guid.Parse(User.Identity.Name);
-                    d.UpdatedDate = DateTime.Now;
-                    d.MaTaiXe = data.MaTaiXe;
-                    d.TenTaiXe = data.TenTaiXe;
-                    d.HangBang = data.HangBang;
-                    d.SoDienThoai = data.SoDienThoai;
-                    uow.TaiXes.Update(d);
-                }
-
+                duLieu.UpdatedBy = Guid.Parse(User.Identity.Name);
+                duLieu.UpdatedDate = DateTime.Now;
+                uow.DM_Loais.Update(duLieu);
                 uow.Complete();
+                //Ghi log truy cập
                 return StatusCode(StatusCodes.Status204NoContent);
             }
         }
@@ -364,7 +367,7 @@ namespace ERP.Controllers
         {
             lock (Commons.LockObjectState)
             {
-                TaiXe duLieu = uow.TaiXes.GetById(id);
+                DM_Loai duLieu = uow.DM_Loais.GetById(id);
 
                 if (duLieu == null)
                 {
@@ -373,7 +376,7 @@ namespace ERP.Controllers
                 duLieu.DeletedDate = DateTime.Now;
                 duLieu.DeletedBy = Guid.Parse(User.Identity.Name);
                 duLieu.IsDeleted = true;
-                uow.TaiXes.Update(duLieu);
+                uow.DM_Loais.Update(duLieu);
                 uow.Complete();
                 return Ok(duLieu);
             }

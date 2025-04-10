@@ -231,9 +231,9 @@ namespace ERP.Data.Migrations
 
             modelBuilder.Entity("ERP.Models.Adsun", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("ACOnOff")
                         .HasColumnType("bit");
@@ -285,6 +285,9 @@ namespace ERP.Data.Migrations
 
                     b.Property<bool>("Gsm")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Id_Adsun")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("InputPower")
                         .HasColumnType("nvarchar(max)");
@@ -363,192 +366,6 @@ namespace ERP.Data.Migrations
                     b.ToTable("Adsuns");
                 });
 
-            modelBuilder.Entity("ERP.Models.BoPhan", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("BoPhan_Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CreatedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("DeletedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("MaBoPhan")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<Guid?>("PhongBan_Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("TenBoPhan")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<int>("ThuTu")
-                        .HasColumnType("int");
-
-                    b.Property<Guid?>("UpdatedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PhongBan_Id");
-
-                    b.ToTable("BoPhans");
-                });
-
-            modelBuilder.Entity("ERP.Models.CBNV_DieuChuyen", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("DieuChuyenNhanVien_Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("DonViTraLuongId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("DonViTraLuongNewId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("DonViTraLuongNew_Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("DonViTraLuong_Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("GhiChu")
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<Guid?>("User_Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DieuChuyenNhanVien_Id");
-
-                    b.HasIndex("DonViTraLuongId");
-
-                    b.HasIndex("DonViTraLuongNewId");
-
-                    b.HasIndex("User_Id");
-
-                    b.ToTable("CBNV_DieuChuyen");
-                });
-
-            modelBuilder.Entity("ERP.Models.ChiTiet_DV_PB_BP", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("BoPhan_Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("ChucVu_Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CreatedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("DeletedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("DonVi_Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid?>("PhongBan_Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("TapDoan_Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("UpdatedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("User_Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ChiTiet_DV_PB_BPs");
-                });
-
-            modelBuilder.Entity("ERP.Models.ChucVu", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CreatedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("DeletedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("MaChucVu")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("TenChucVu")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<Guid?>("UpdatedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ChucVus");
-                });
-
             modelBuilder.Entity("ERP.Models.Config", b =>
                 {
                     b.Property<Guid>("Id")
@@ -584,6 +401,50 @@ namespace ERP.Data.Migrations
                     b.ToTable("Configs");
                 });
 
+            modelBuilder.Entity("ERP.Models.DM_BaoDuong", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("GiaTri")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LoaiBaoDuong")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TanSuat")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DM_BaoDuongs");
+                });
+
             modelBuilder.Entity("ERP.Models.DM_BoPhan", b =>
                 {
                     b.Property<Guid>("Id")
@@ -607,6 +468,9 @@ namespace ERP.Data.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<string>("MaBP")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -651,6 +515,9 @@ namespace ERP.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<string>("MaDV")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -669,6 +536,66 @@ namespace ERP.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("DM_DonVis");
+                });
+
+            modelBuilder.Entity("ERP.Models.DM_HangMuc", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("CanhBao_DenHan")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CanhBao_GanDenHan")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DinhMuc")
+                        .HasColumnType("int");
+
+                    b.Property<string>("GhiChu")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LoaiBaoDuong")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("LoaiPT_Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("NoiDungBaoDuong")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("TanSuat_Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LoaiPT_Id");
+
+                    b.HasIndex("TanSuat_Id");
+
+                    b.ToTable("DM_HangMucs");
                 });
 
             modelBuilder.Entity("ERP.Models.DM_Loai", b =>
@@ -704,6 +631,9 @@ namespace ERP.Data.Migrations
                     b.Property<string>("Name_Eng")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("Nhom_Id")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Note")
                         .HasColumnType("nvarchar(max)");
 
@@ -717,6 +647,8 @@ namespace ERP.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Nhom_Id");
 
                     b.ToTable("DM_Loais");
                 });
@@ -741,6 +673,9 @@ namespace ERP.Data.Migrations
 
                     b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("GiaTri")
+                        .HasColumnType("int");
 
                     b.Property<string>("HinhAnh")
                         .HasColumnType("nvarchar(max)");
@@ -775,6 +710,12 @@ namespace ERP.Data.Migrations
                     b.Property<string>("TTMK_KLHH")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("TanSuat")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("TanSuat_Id")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Type")
                         .HasColumnType("nvarchar(max)");
 
@@ -785,6 +726,8 @@ namespace ERP.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("TanSuat_Id");
 
                     b.ToTable("DM_Models");
                 });
@@ -831,6 +774,47 @@ namespace ERP.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("DM_Nhoms");
+                });
+
+            modelBuilder.Entity("ERP.Models.DM_TanSuat", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("GiaTri")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("MaTanSuat")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TanSuat")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DM_TanSuats");
                 });
 
             modelBuilder.Entity("ERP.Models.DM_TinhTrang", b =>
@@ -889,6 +873,9 @@ namespace ERP.Data.Migrations
                     b.Property<string>("BienSo2")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("BoPhan_Id")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("CreatedBy")
                         .HasColumnType("uniqueidentifier");
 
@@ -903,6 +890,9 @@ namespace ERP.Data.Migrations
 
                     b.Property<string>("DonViSuDung")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("DonVi_Id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("HinhAnh")
                         .HasColumnType("nvarchar(max)");
@@ -922,14 +912,23 @@ namespace ERP.Data.Migrations
                     b.Property<string>("KLTB")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("LichSuBaoDuong_Id")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("LoaiPT")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("LoaiPT_Id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("MaPhuongTien")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Model")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("Model_Id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Model_Option")
                         .HasColumnType("nvarchar(max)");
@@ -940,8 +939,32 @@ namespace ERP.Data.Migrations
                     b.Property<string>("Note")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("PhuTrachBoPhan_Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("SoChuyenXe")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SoKM")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SoKM_Adsun")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SoKM_NgayBaoDuong")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SoKhung")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("TinhTrang")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("TinhTrang_Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("TongSoKM_Adsun")
+                        .HasColumnType("int");
 
                     b.Property<Guid?>("UpdatedBy")
                         .HasColumnType("uniqueidentifier");
@@ -959,6 +982,14 @@ namespace ERP.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("LichSuBaoDuong_Id");
+
+                    b.HasIndex("LoaiPT_Id");
+
+                    b.HasIndex("Model_Id");
+
+                    b.HasIndex("TinhTrang_Id");
 
                     b.ToTable("DS_PhuongTiens");
                 });
@@ -984,8 +1015,14 @@ namespace ERP.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<Guid?>("LichSuBaoDuong_Id")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("LoaiTB")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("LoaiTB_Id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("MaCode_BienSo1")
                         .HasColumnType("nvarchar(max)");
@@ -999,11 +1036,14 @@ namespace ERP.Data.Migrations
                     b.Property<string>("Model")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("Model_Id")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("NgayBatDau")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime?>("NgayBatDau")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Note")
                         .HasColumnType("nvarchar(max)");
@@ -1011,8 +1051,17 @@ namespace ERP.Data.Migrations
                     b.Property<string>("PhanBo")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("ThoiGianSuDung")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ThoiGian_NgayBaoDuong")
+                        .HasColumnType("int");
+
                     b.Property<string>("TinhTrang")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("TinhTrang_Id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("UpdatedBy")
                         .HasColumnType("uniqueidentifier");
@@ -1031,37 +1080,86 @@ namespace ERP.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("LichSuBaoDuong_Id");
+
+                    b.HasIndex("LoaiTB_Id");
+
+                    b.HasIndex("Model_Id");
+
+                    b.HasIndex("TinhTrang_Id");
+
                     b.ToTable("DS_ThietBis");
                 });
 
-            modelBuilder.Entity("ERP.Models.DieuChuyenNhanVien", b =>
+            modelBuilder.Entity("ERP.Models.GhepNoiPhuongTien_ThietBi", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("BoPhanId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("BoPhanNewId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("BoPhanNew_Id")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("BoPhan_Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("ChucVuId")
+                    b.Property<Guid>("CreatedBy")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("ChucVuNewId")
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("DeletedBy")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("ChucVuNew_Id")
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("DonVi_Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("ChucVu_Id")
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("NgayBatDau")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("NgayKetThuc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("PhuongTien_Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("TenThietBi")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("ThietBi2_Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ThietBi_Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PhuongTien_Id");
+
+                    b.HasIndex("ThietBi2_Id");
+
+                    b.HasIndex("ThietBi_Id");
+
+                    b.ToTable("GhepNoiPhuongTien_ThietBis");
+                });
+
+            modelBuilder.Entity("ERP.Models.KeHoachBaoDuong", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("BaoDuong_Id")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("CreatedBy")
@@ -1076,49 +1174,26 @@ namespace ERP.Data.Migrations
                     b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("DonViId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("DonViNewId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("DonViNew_Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("DonVi_Id")
+                    b.Property<Guid?>("DiaDiem_Id")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("MaDieuChuyen")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<string>("IsQuaHan")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("NgayDieuChuyen")
+                    b.Property<DateTime?>("NgayTao")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("PhongBanNew_Id")
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("PhuongTien_Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("PhongBan_Id")
+                    b.Property<Guid?>("ThietBi_Id")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("PhongbanId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("PhongbanNewId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("TapDoanNew_Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("TapDoan_Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("TrangThai")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
 
                     b.Property<Guid?>("UpdatedBy")
                         .HasColumnType("uniqueidentifier");
@@ -1126,36 +1201,223 @@ namespace ERP.Data.Migrations
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("User_Id")
+                    b.HasKey("Id");
+
+                    b.HasIndex("BaoDuong_Id");
+
+                    b.HasIndex("PhuongTien_Id");
+
+                    b.HasIndex("ThietBi_Id");
+
+                    b.ToTable("KeHoachBaoDuongs");
+                });
+
+            modelBuilder.Entity("ERP.Models.LichSuBaoDuong", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("XacNhan")
+                    b.Property<Guid?>("BaoDuong_Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("ChiPhi")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ChiPhi_TD")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("DiaDiem_Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("GhiChu")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("HinhAnh")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsBaoDuong")
                         .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDuyet")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsHoanThanh")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsLenhHoanThanh")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsYeuCau")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("KetQua")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LyDo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Ngay")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("NgayDeXuatHoanThanh")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("NgayDiBaoDuong")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("NgayHoanThanh")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("NgayXacNhan")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("NguoiDeXuatHoanThanh")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("NguoiDeXuatHoanThanh_Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("NguoiDiBaoDuong")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("NguoiDiBaoDuong_Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("NguoiHuyDuyet")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("NguoiHuyDuyet_Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("NguoiXacNhan")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NguoiXacNhanHoanThanh")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("NguoiXacNhanHoanThanh_Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("NguoiXacNhan_Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("NguoiYeuCau")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("NguoiYeuCau_Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("NoiDung")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("PhuongTien_Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("SoKM")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("ThietBi_Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("ThoiGianSuDung")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TrangThai")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BoPhanId");
+                    b.HasIndex("BaoDuong_Id");
 
-                    b.HasIndex("BoPhanNewId");
+                    b.HasIndex("PhuongTien_Id");
 
-                    b.HasIndex("ChucVuId");
+                    b.HasIndex("ThietBi_Id");
 
-                    b.HasIndex("ChucVuNewId");
-
-                    b.HasIndex("DonViId");
-
-                    b.HasIndex("DonViNewId");
-
-                    b.HasIndex("PhongbanId");
-
-                    b.HasIndex("PhongbanNewId");
-
-                    b.HasIndex("User_Id");
-
-                    b.ToTable("DieuChuyenNhanViens");
+                    b.ToTable("LichSuBaoDuongs");
                 });
 
-            modelBuilder.Entity("ERP.Models.DonVi", b =>
+            modelBuilder.Entity("ERP.Models.LichSuBaoDuong_ChiTiet", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("ChiPhi")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("GhiChu")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("HangMuc_Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("HinhAnh")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("LichSuBaoDuong_Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("PhuongTien_Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HangMuc_Id");
+
+                    b.HasIndex("LichSuBaoDuong_Id");
+
+                    b.HasIndex("PhuongTien_Id");
+
+                    b.ToTable("LichSuBaoDuong_ChiTiets");
+                });
+
+            modelBuilder.Entity("ERP.Models.LichSuKiemTraHangNgay", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -1173,27 +1435,26 @@ namespace ERP.Data.Migrations
                     b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("DonVi_Id")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("GhiChu")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("HinhAnh")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("MaDonVi")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<string>("NguoiKiemTra")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("TapDoan_Id")
+                    b.Property<Guid?>("PhuongTien_Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("TenDonVi")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<int>("ThuTu")
+                    b.Property<int>("SoKM")
                         .HasColumnType("int");
+
+                    b.Property<string>("TinhTrang")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("UpdatedBy")
                         .HasColumnType("uniqueidentifier");
@@ -1203,9 +1464,64 @@ namespace ERP.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TapDoan_Id");
+                    b.HasIndex("PhuongTien_Id");
 
-                    b.ToTable("DonVis");
+                    b.ToTable("LichSuKiemTraHangNgays");
+                });
+
+            modelBuilder.Entity("ERP.Models.LichSuPhanBoDonVi", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("BienSo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("BoPhan_Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("DonVi_Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("NgayBatDau")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("NgayKetThuc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("PhuongTien_Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("TenDonVi")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PhuongTien_Id");
+
+                    b.ToTable("LichSuPhanBoDonVis");
                 });
 
             modelBuilder.Entity("ERP.Models.Log", b =>
@@ -1242,177 +1558,13 @@ namespace ERP.Data.Migrations
                     b.ToTable("Logs");
                 });
 
-            modelBuilder.Entity("ERP.Models.Menu", b =>
+            modelBuilder.Entity("ERP.Models.MMS_PhuTrachBoPhan", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CreatedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("DeletedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("DonVi_id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Icon")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid?>("Parent_Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("PhanMem_Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("PhongBan_Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("TapDoan_Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("TenMenu")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<int>("ThuTu")
-                        .HasColumnType("int");
-
-                    b.Property<Guid?>("UpdatedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Url")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<bool>("isMoBi")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Menus");
-                });
-
-            modelBuilder.Entity("ERP.Models.Menu_Role", b =>
-                {
-                    b.Property<Guid>("Menu_Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("Role_Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("Add")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Cof")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid>("CreatedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Del")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid?>("DeletedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Edit")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Print")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid?>("UpdatedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("View")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Menu_Id", "Role_Id");
-
-                    b.HasIndex("Role_Id");
-
-                    b.ToTable("Menu_Roles");
-                });
-
-            modelBuilder.Entity("ERP.Models.NhomDoiTac", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CreatedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("DeletedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("MaNhomDoiTac")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("TenNhomDoiTac")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<string>("TenNhomDoiTac_EN")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("UpdatedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("NhomDoiTacs");
-                });
-
-            modelBuilder.Entity("ERP.Models.Phongban", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<Guid?>("BoPhan_Id")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("CreatedBy")
@@ -1430,24 +1582,29 @@ namespace ERP.Data.Migrations
                     b.Property<Guid?>("DonVi_Id")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("HinhAnh_NhanVien")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("MaPhongBan")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<bool>("IsFull")
+                        .HasColumnType("bit");
 
-                    b.Property<Guid?>("PhongBan_Id")
+                    b.Property<string>("MaNhanVien")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("NgayBatDau")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("NgayKetThuc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("NhanVien")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("PhuongTien_Id")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("TenPhongBan")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<int>("ThuTu")
-                        .HasColumnType("int");
 
                     b.Property<Guid?>("UpdatedBy")
                         .HasColumnType("uniqueidentifier");
@@ -1455,11 +1612,19 @@ namespace ERP.Data.Migrations
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid?>("User2_Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("User_Id")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("DonVi_Id");
+                    b.HasIndex("PhuongTien_Id")
+                        .IsUnique()
+                        .HasFilter("[PhuongTien_Id] IS NOT NULL");
 
-                    b.ToTable("phongbans");
+                    b.ToTable("MMS_PhuTrachBoPhans");
                 });
 
             modelBuilder.Entity("ERP.Models.PhuongTien_DonVi", b =>
@@ -1575,79 +1740,6 @@ namespace ERP.Data.Migrations
                     b.ToTable("PhuongTien_PhuTrachs");
                 });
 
-            modelBuilder.Entity("ERP.Models.RoleByDonVi", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CreatedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("DeletedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid?>("UpdatedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("User_Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("User_Id");
-
-                    b.ToTable("RoleByDonVis");
-                });
-
-            modelBuilder.Entity("ERP.Models.Role_DV_PB", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("BoPhan_Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("DonVi_Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("Phongban_Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("RoleByDonVi_Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("TapDoan_Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BoPhan_Id");
-
-                    b.HasIndex("DonVi_Id");
-
-                    b.HasIndex("Phongban_Id");
-
-                    b.HasIndex("RoleByDonVi_Id");
-
-                    b.HasIndex("TapDoan_Id");
-
-                    b.ToTable("Role_DV_PBs");
-                });
-
             modelBuilder.Entity("ERP.Models.Status", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1686,7 +1778,7 @@ namespace ERP.Data.Migrations
                     b.ToTable("Statuss");
                 });
 
-            modelBuilder.Entity("ERP.Models.TaiXe", b =>
+            modelBuilder.Entity("ERP.Models.ThongTinTheoHangMuc", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -1704,70 +1796,22 @@ namespace ERP.Data.Migrations
                     b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("HangBang")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("GiaTriBaoDuong")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("HangMuc_Id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("MaTaiXe")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SoDienThoai")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TenTaiXe")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("UpdatedBy")
+                    b.Property<Guid?>("PhuongTien_Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("TongChiPhi")
+                        .HasColumnType("int");
 
-                    b.Property<bool>("isVaoCong")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TaiXes");
-                });
-
-            modelBuilder.Entity("ERP.Models.TapDoan", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CreatedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("DeletedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("MaTapDoan")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<Guid?>("TapDoan_Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("TenTapDoan")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<int>("ThuTu")
+                    b.Property<int>("TongChiPhi_TD")
                         .HasColumnType("int");
 
                     b.Property<Guid?>("UpdatedBy")
@@ -1778,7 +1822,11 @@ namespace ERP.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TapDoans");
+                    b.HasIndex("HangMuc_Id");
+
+                    b.HasIndex("PhuongTien_Id");
+
+                    b.ToTable("ThongTinTheoHangMucs");
                 });
 
             modelBuilder.Entity("ERP.Models.Translate", b =>
@@ -1935,47 +1983,6 @@ namespace ERP.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ERP.Models.BoPhan", b =>
-                {
-                    b.HasOne("ERP.Models.Phongban", "Phongban")
-                        .WithMany("BoPhans")
-                        .HasForeignKey("PhongBan_Id")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("Phongban");
-                });
-
-            modelBuilder.Entity("ERP.Models.CBNV_DieuChuyen", b =>
-                {
-                    b.HasOne("ERP.Models.DieuChuyenNhanVien", "DieuChuyenNhanVien")
-                        .WithMany("cBNVDieuChuyens")
-                        .HasForeignKey("DieuChuyenNhanVien_Id")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("ERP.Models.DonVi", "DonViTraLuong")
-                        .WithMany()
-                        .HasForeignKey("DonViTraLuongId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("ERP.Models.DonVi", "DonViTraLuongNew")
-                        .WithMany()
-                        .HasForeignKey("DonViTraLuongNewId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("ERP.Data.MyDbContext+ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("User_Id")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("DieuChuyenNhanVien");
-
-                    b.Navigation("DonViTraLuong");
-
-                    b.Navigation("DonViTraLuongNew");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("ERP.Models.DM_BoPhan", b =>
                 {
                     b.HasOne("ERP.Models.DM_DonVi", "DonVi")
@@ -1986,80 +1993,219 @@ namespace ERP.Data.Migrations
                     b.Navigation("DonVi");
                 });
 
-            modelBuilder.Entity("ERP.Models.DieuChuyenNhanVien", b =>
+            modelBuilder.Entity("ERP.Models.DM_HangMuc", b =>
                 {
-                    b.HasOne("ERP.Models.BoPhan", "BoPhan")
+                    b.HasOne("ERP.Models.DM_Loai", "DM_Loai")
                         .WithMany()
-                        .HasForeignKey("BoPhanId")
+                        .HasForeignKey("LoaiPT_Id")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("ERP.Models.BoPhan", "BoPhanNew")
+                    b.HasOne("ERP.Models.DM_TanSuat", "DM_TanSuat")
                         .WithMany()
-                        .HasForeignKey("BoPhanNewId")
+                        .HasForeignKey("TanSuat_Id")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("ERP.Models.ChucVu", "ChucVu")
-                        .WithMany()
-                        .HasForeignKey("ChucVuId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                    b.Navigation("DM_Loai");
 
-                    b.HasOne("ERP.Models.ChucVu", "ChucVuNew")
-                        .WithMany()
-                        .HasForeignKey("ChucVuNewId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("ERP.Models.DonVi", "DonVi")
-                        .WithMany()
-                        .HasForeignKey("DonViId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("ERP.Models.DonVi", "DonViNew")
-                        .WithMany()
-                        .HasForeignKey("DonViNewId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("ERP.Models.Phongban", "Phongban")
-                        .WithMany()
-                        .HasForeignKey("PhongbanId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("ERP.Models.Phongban", "PhongbanNew")
-                        .WithMany()
-                        .HasForeignKey("PhongbanNewId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("ERP.Data.MyDbContext+ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("User_Id")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("BoPhan");
-
-                    b.Navigation("BoPhanNew");
-
-                    b.Navigation("ChucVu");
-
-                    b.Navigation("ChucVuNew");
-
-                    b.Navigation("DonVi");
-
-                    b.Navigation("DonViNew");
-
-                    b.Navigation("Phongban");
-
-                    b.Navigation("PhongbanNew");
-
-                    b.Navigation("User");
+                    b.Navigation("DM_TanSuat");
                 });
 
-            modelBuilder.Entity("ERP.Models.DonVi", b =>
+            modelBuilder.Entity("ERP.Models.DM_Loai", b =>
                 {
-                    b.HasOne("ERP.Models.TapDoan", "TapDoan")
+                    b.HasOne("ERP.Models.DM_Nhom", "DM_Nhom")
                         .WithMany()
-                        .HasForeignKey("TapDoan_Id")
+                        .HasForeignKey("Nhom_Id")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.Navigation("TapDoan");
+                    b.Navigation("DM_Nhom");
+                });
+
+            modelBuilder.Entity("ERP.Models.DM_Model", b =>
+                {
+                    b.HasOne("ERP.Models.DM_TanSuat", "DM_TanSuat")
+                        .WithMany()
+                        .HasForeignKey("TanSuat_Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("DM_TanSuat");
+                });
+
+            modelBuilder.Entity("ERP.Models.DS_PhuongTien", b =>
+                {
+                    b.HasOne("ERP.Models.LichSuBaoDuong", "LichSuBaoDuong")
+                        .WithMany()
+                        .HasForeignKey("LichSuBaoDuong_Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ERP.Models.DM_Loai", "DM_Loai")
+                        .WithMany()
+                        .HasForeignKey("LoaiPT_Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ERP.Models.DM_Model", "DM_Model")
+                        .WithMany()
+                        .HasForeignKey("Model_Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ERP.Models.DM_TinhTrang", "DM_TinhTrang")
+                        .WithMany()
+                        .HasForeignKey("TinhTrang_Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("DM_Loai");
+
+                    b.Navigation("DM_Model");
+
+                    b.Navigation("DM_TinhTrang");
+
+                    b.Navigation("LichSuBaoDuong");
+                });
+
+            modelBuilder.Entity("ERP.Models.DS_ThietBi", b =>
+                {
+                    b.HasOne("ERP.Models.LichSuBaoDuong", "LichSuBaoDuong")
+                        .WithMany()
+                        .HasForeignKey("LichSuBaoDuong_Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ERP.Models.DM_Loai", "DM_Loai")
+                        .WithMany()
+                        .HasForeignKey("LoaiTB_Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ERP.Models.DM_Model", "DM_Model")
+                        .WithMany()
+                        .HasForeignKey("Model_Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ERP.Models.DM_TinhTrang", "DM_TinhTrang")
+                        .WithMany()
+                        .HasForeignKey("TinhTrang_Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("DM_Loai");
+
+                    b.Navigation("DM_Model");
+
+                    b.Navigation("DM_TinhTrang");
+
+                    b.Navigation("LichSuBaoDuong");
+                });
+
+            modelBuilder.Entity("ERP.Models.GhepNoiPhuongTien_ThietBi", b =>
+                {
+                    b.HasOne("ERP.Models.DS_PhuongTien", "PhuongTien")
+                        .WithMany()
+                        .HasForeignKey("PhuongTien_Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ERP.Models.DS_ThietBi", "ThietBi2")
+                        .WithMany()
+                        .HasForeignKey("ThietBi2_Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ERP.Models.DS_ThietBi", "ThietBi")
+                        .WithMany()
+                        .HasForeignKey("ThietBi_Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("PhuongTien");
+
+                    b.Navigation("ThietBi");
+
+                    b.Navigation("ThietBi2");
+                });
+
+            modelBuilder.Entity("ERP.Models.KeHoachBaoDuong", b =>
+                {
+                    b.HasOne("ERP.Models.DM_Model", "BaoDuong")
+                        .WithMany()
+                        .HasForeignKey("BaoDuong_Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ERP.Models.DS_PhuongTien", "PhuongTien")
+                        .WithMany()
+                        .HasForeignKey("PhuongTien_Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ERP.Models.DS_ThietBi", "ThietBi")
+                        .WithMany()
+                        .HasForeignKey("ThietBi_Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("BaoDuong");
+
+                    b.Navigation("PhuongTien");
+
+                    b.Navigation("ThietBi");
+                });
+
+            modelBuilder.Entity("ERP.Models.LichSuBaoDuong", b =>
+                {
+                    b.HasOne("ERP.Models.DM_Model", "BaoDuong")
+                        .WithMany()
+                        .HasForeignKey("BaoDuong_Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ERP.Models.DS_PhuongTien", "PhuongTien")
+                        .WithMany()
+                        .HasForeignKey("PhuongTien_Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ERP.Models.DS_ThietBi", "ThietBi")
+                        .WithMany()
+                        .HasForeignKey("ThietBi_Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("BaoDuong");
+
+                    b.Navigation("PhuongTien");
+
+                    b.Navigation("ThietBi");
+                });
+
+            modelBuilder.Entity("ERP.Models.LichSuBaoDuong_ChiTiet", b =>
+                {
+                    b.HasOne("ERP.Models.DM_HangMuc", "HangMuc")
+                        .WithMany()
+                        .HasForeignKey("HangMuc_Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ERP.Models.LichSuBaoDuong", "LichSuBaoDuong")
+                        .WithMany("LichSuBaoDuong_ChiTiets")
+                        .HasForeignKey("LichSuBaoDuong_Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ERP.Models.DS_PhuongTien", "PhuongTien")
+                        .WithMany()
+                        .HasForeignKey("PhuongTien_Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("HangMuc");
+
+                    b.Navigation("LichSuBaoDuong");
+
+                    b.Navigation("PhuongTien");
+                });
+
+            modelBuilder.Entity("ERP.Models.LichSuKiemTraHangNgay", b =>
+                {
+                    b.HasOne("ERP.Models.DS_PhuongTien", "PhuongTien")
+                        .WithMany()
+                        .HasForeignKey("PhuongTien_Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("PhuongTien");
+                });
+
+            modelBuilder.Entity("ERP.Models.LichSuPhanBoDonVi", b =>
+                {
+                    b.HasOne("ERP.Models.DS_PhuongTien", "PhuongTien")
+                        .WithMany()
+                        .HasForeignKey("PhuongTien_Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("PhuongTien");
                 });
 
             modelBuilder.Entity("ERP.Models.Log", b =>
@@ -2072,33 +2218,14 @@ namespace ERP.Data.Migrations
                     b.Navigation("ApplicationUser");
                 });
 
-            modelBuilder.Entity("ERP.Models.Menu_Role", b =>
+            modelBuilder.Entity("ERP.Models.MMS_PhuTrachBoPhan", b =>
                 {
-                    b.HasOne("ERP.Models.Menu", "Menu")
-                        .WithMany("Menu_Roles")
-                        .HasForeignKey("Menu_Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ERP.Data.MyDbContext+ApplicationRole", "Role")
-                        .WithMany("Menu_Roles")
-                        .HasForeignKey("Role_Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Menu");
-
-                    b.Navigation("Role");
-                });
-
-            modelBuilder.Entity("ERP.Models.Phongban", b =>
-                {
-                    b.HasOne("ERP.Models.DonVi", "DonVi")
-                        .WithMany()
-                        .HasForeignKey("DonVi_Id")
+                    b.HasOne("ERP.Models.DS_PhuongTien", "PhuongTien")
+                        .WithOne("PhuTrachBoPhan")
+                        .HasForeignKey("ERP.Models.MMS_PhuTrachBoPhan", "PhuongTien_Id")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.Navigation("DonVi");
+                    b.Navigation("PhuongTien");
                 });
 
             modelBuilder.Entity("ERP.Models.PhuongTien_DonVi", b =>
@@ -2142,54 +2269,21 @@ namespace ERP.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ERP.Models.RoleByDonVi", b =>
+            modelBuilder.Entity("ERP.Models.ThongTinTheoHangMuc", b =>
                 {
-                    b.HasOne("ERP.Data.MyDbContext+ApplicationUser", "User")
+                    b.HasOne("ERP.Models.DM_HangMuc", "HangMuc")
                         .WithMany()
-                        .HasForeignKey("User_Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("ERP.Models.Role_DV_PB", b =>
-                {
-                    b.HasOne("ERP.Models.BoPhan", "BoPhan")
-                        .WithMany()
-                        .HasForeignKey("BoPhan_Id")
+                        .HasForeignKey("HangMuc_Id")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("ERP.Models.DonVi", "DonVi")
+                    b.HasOne("ERP.Models.DS_PhuongTien", "PhuongTien")
                         .WithMany()
-                        .HasForeignKey("DonVi_Id")
+                        .HasForeignKey("PhuongTien_Id")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("ERP.Models.Phongban", "Phongban")
-                        .WithMany()
-                        .HasForeignKey("Phongban_Id")
-                        .OnDelete(DeleteBehavior.Restrict);
+                    b.Navigation("HangMuc");
 
-                    b.HasOne("ERP.Models.RoleByDonVi", "RoleByDonVi")
-                        .WithMany("Role_DV_PBs")
-                        .HasForeignKey("RoleByDonVi_Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ERP.Models.TapDoan", "TapDoan")
-                        .WithMany()
-                        .HasForeignKey("TapDoan_Id")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("BoPhan");
-
-                    b.Navigation("DonVi");
-
-                    b.Navigation("Phongban");
-
-                    b.Navigation("RoleByDonVi");
-
-                    b.Navigation("TapDoan");
+                    b.Navigation("PhuongTien");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -2230,8 +2324,6 @@ namespace ERP.Data.Migrations
 
             modelBuilder.Entity("ERP.Data.MyDbContext+ApplicationRole", b =>
                 {
-                    b.Navigation("Menu_Roles");
-
                     b.Navigation("UserRoles");
                 });
 
@@ -2240,24 +2332,14 @@ namespace ERP.Data.Migrations
                     b.Navigation("UserRoles");
                 });
 
-            modelBuilder.Entity("ERP.Models.DieuChuyenNhanVien", b =>
+            modelBuilder.Entity("ERP.Models.DS_PhuongTien", b =>
                 {
-                    b.Navigation("cBNVDieuChuyens");
+                    b.Navigation("PhuTrachBoPhan");
                 });
 
-            modelBuilder.Entity("ERP.Models.Menu", b =>
+            modelBuilder.Entity("ERP.Models.LichSuBaoDuong", b =>
                 {
-                    b.Navigation("Menu_Roles");
-                });
-
-            modelBuilder.Entity("ERP.Models.Phongban", b =>
-                {
-                    b.Navigation("BoPhans");
-                });
-
-            modelBuilder.Entity("ERP.Models.RoleByDonVi", b =>
-                {
-                    b.Navigation("Role_DV_PBs");
+                    b.Navigation("LichSuBaoDuong_ChiTiets");
                 });
 #pragma warning restore 612, 618
         }

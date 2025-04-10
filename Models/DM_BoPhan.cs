@@ -16,7 +16,7 @@ namespace ERP.Models
         public string Name { get; set; }
         public string Name_Eng { get; set; }
         public string Note { get; set; }
-          public string MaBP { get; set; }
+        public string MaBP { get; set; }
 
     }
 }

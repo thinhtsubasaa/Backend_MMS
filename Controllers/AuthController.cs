@@ -54,7 +54,6 @@ namespace ERP.Controllers
             appSettings = _appSettings.Value;
             config = _config;
             _image = image;
-
             roleManager = _roleManager;
             string connectionString = _configuration.GetConnectionString("DefaultConnection");
             dbAdapter = new DbAdapter(connectionString);

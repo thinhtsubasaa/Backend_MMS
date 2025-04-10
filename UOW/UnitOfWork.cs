@@ -9,23 +9,9 @@ namespace ERP.UOW
 {
     public class UnitofWork : IUnitofWork
     {
-        public IMenuRepository Menus { get; private set; }
-        public IDonViRepository DonVis { get; private set; }
-
-        public IMenu_RoleRepository Menu_Roles { get; private set; }
         public ILogRepository Logs { get; private set; }
-        public IBoPhanRepository BoPhans { get; private set; }
-        public ITapDoanRepository tapDoans { get; private set; }
-        public IPhongbanRepository phongbans { get; private set; }
-        public IChucVuRepository chucVus { get; private set; }
-
-        public ICBNV_DieuChuyenRepository cBNV_DieuChuyens { get; private set; }
         public IConfigRepository Configs { get; private set; }
-        public IRoleByDonViRepository roleByDonVis { get; private set; }
-        public IRole_DV_PBRepository role_DV_PBs { get; private set; }
-        public IChiTiet_DV_PB_BPRepository chiTiet_DV_PB_BPs { get; private set; }
-        public INhomDoiTacRepository NhomDoiTacs { get; private set; }
-        public ITaiXeRepository TaiXes { get; private set; }
+
         public IAdsunRepository Adsuns { get; private set; }
         public IDS_PhuongTienRepository DS_PhuongTiens { get; private set; }
         public IPhuongTien_PhuTrachRepository PhuongTien_PhuTrachs { get; private set; }
@@ -39,6 +25,19 @@ namespace ERP.UOW
         public IDM_TinhTrangRepository DM_TinhTrangs { get; private set; }
         public ITranslateRepository Translates { get; private set; }
         public IStatusRepository Statuss { get; private set; }
+        public IDM_BaoDuongRepository DM_BaoDuongs { get; private set; }
+        public IKeHoachBaoDuongRepository KeHoachBaoDuongs { get; private set; }
+        public ILichSuBaoDuongRepository LichSuBaoDuongs { get; private set; }
+        public IMMS_PhuTrachBoPhanRepository MMS_PhuTrachBoPhans { get; private set; }
+        public ILichSuPhanBoDonViRepository LichSuPhanBoDonVis { get; private set; }
+        public IDM_TanSuatRepository DM_TanSuats { get; private set; }
+        public IGhepNoiPhuongTien_ThietBiRepository GhepNoiPhuongTien_ThietBis { get; private set; }
+
+        public IDM_HangMucRepository DM_HangMucs { get; private set; }
+
+        public IThongTinTheoHangMucRepository ThongTinTheoHangMucs { get; private set; }
+        public ILichSuBaoDuong_ChiTietRepository LichSuBaoDuong_ChiTiets { get; private set; }
+        public ILichSuKiemTraHangNgayRepository LichSuKiemTraHangNgays { get; private set; }
 
 
 
@@ -47,23 +46,9 @@ namespace ERP.UOW
         public UnitofWork(MyDbContext _db)
         {
             db = _db;
-            Menus = new MenuRepository(db);
 
-            DonVis = new DonViRepository(db);
-            Menu_Roles = new Menu_RoleRepository(db);
             Logs = new LogRepository(db);
-            BoPhans = new BoPhanRepository(db);
-            tapDoans = new TapDoanRepository(db);
-            phongbans = new PhongbanRepository(db);
-            chucVus = new ChucVuRepository(db);
-
-            cBNV_DieuChuyens = new CBNV_DieuChuyenRepository(db);
             Configs = new ConfigRepository(db);
-            roleByDonVis = new RoleByDonViRepository(db);
-            role_DV_PBs = new Role_DV_PBRepository(db);
-            chiTiet_DV_PB_BPs = new ChiTiet_DV_PB_BPRepository(db);
-            NhomDoiTacs = new NhomDoiTacRepository(db);
-            TaiXes = new TaiXeRepository(db);
             Adsuns = new AdsunRepository(db);
             DS_PhuongTiens = new DS_PhuongTienRepository(db);
             PhuongTien_PhuTrachs = new PhuongTien_PhuTrachRepository(db);
@@ -77,6 +62,17 @@ namespace ERP.UOW
             DM_TinhTrangs = new DM_TinhTrangRepository(db);
             Translates = new TranslateRepository(db);
             Statuss = new StatusRepository(db);
+            DM_BaoDuongs = new DM_BaoDuongRepository(db);
+            KeHoachBaoDuongs = new KeHoachBaoDuongRepository(db);
+            LichSuBaoDuongs = new LichSuBaoDuongRepository(db);
+            MMS_PhuTrachBoPhans = new MMS_PhuTrachBoPhanRepository(db);
+            LichSuPhanBoDonVis = new LichSuPhanBoDonViRepository(db);
+            DM_TanSuats = new DM_TanSuatRepository(db);
+            GhepNoiPhuongTien_ThietBis = new GhepNoiPhuongTien_ThietBiRepository(db);
+            DM_HangMucs = new DM_HangMucRepository(db);
+            ThongTinTheoHangMucs = new ThongTinTheoHangMucRepository(db);
+            LichSuBaoDuong_ChiTiets = new LichSuBaoDuong_ChiTietRepository(db);
+            LichSuKiemTraHangNgays = new LichSuKiemTraHangNgayRepository(db);
 
         }
         public void Dispose()

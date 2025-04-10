@@ -33,6 +33,8 @@ using static ERP.Commons;
 using static ERP.Data.MyDbContext;
 using static ERP.Controllers.AdsunController;
 using Microsoft.AspNetCore.Http.Connections;
+using static ERP.Controllers.AutomaticController;
+
 
 namespace ERP
 {
@@ -54,9 +56,15 @@ namespace ERP
       services.AddHttpClient("MyHttpClient");
       services.AddScoped<DownloadImage>();
       services.AddTransient<IUnitofWork, UnitofWork>();
-      // services.AddHostedService<VehicleDataUpdateService>();
+      services.AddHostedService<VehicleDataUpdateService>();
       services.AddScoped<VehicleService>();
+      services.AddScoped<DataService>();
+      services.AddScoped<IMMSNotificationService, MMSNotificationService>();
+      services.AddHostedService<MasterDataService>();
+      services.AddScoped<PushThongBao>();
       services.AddDbContext<MyDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+      services.AddDbContext<SecondDbContext>(options =>
+    options.UseSqlServer(Configuration.GetConnectionString("DB2Connection")));
       services.AddIdentity<ApplicationUser, ApplicationRole>().AddEntityFrameworkStores<MyDbContext>().AddDefaultTokenProviders();
       services.AddCors(options => options.AddPolicy("CorsApi",
   builder =>

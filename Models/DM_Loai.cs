@@ -16,6 +16,9 @@ namespace ERP.Models
         public string ThuocNhom { get; set; }
         public string Note { get; set; }
         public string Img { get; set; }
+         [ForeignKey("DM_Nhom")]
+        public Guid? Nhom_Id { get; set; }
+        public DM_Nhom DM_Nhom { get; set; }
 
     }
 }

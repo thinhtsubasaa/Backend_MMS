@@ -9,12 +9,122 @@ using static ERP.Commons;
 
 namespace ERP.Models
 {
+    public class Adsun_DTO
+    {
+        public bool IsDeleted { get; set; }
+        public string Plate { get; set; }
+        public string ToaDo { get; set; }
+        public string Km { get; set; }
+        public string Speed { get; set; }
+        public string Address { get; set; }
+        public string GroupName { get; set; }
+        public string Angle { get; set; }
+        public string LoaiPT { get; set; }
+        public string Model { get; set; }
+        public string Model_Option { get; set; }
+        public string SoKM_Adsun { get; set; }
+        public string NgayBaoDuong { get; set; }
+        public string TaiXePhuTrach { get; set; }
+        public string HinhAnh_TaiXe { get; set; }
+        public string MaNhanVien { get; set; }
+        public string SoKM { get; set; }
+        public string SoKMTuNgayBaoDuong { get; set; }
+        public string SoKM_NgayBaoDuong { get; set; }
+
+
+
+    }
+    public class PhuongTienDTO
+    {
+        public Guid Id { get; set; }
+        public string Model { get; set; }
+        public string Model_Option { get; set; }
+        public string BienSo1 { get; set; }
+        public string BienSo2 { get; set; }
+        public string SoKhung { get; set; }
+        public Guid? Model_Id { get; set; }
+        public Guid? DonVi_Id { get; set; }
+        public Guid? LoaiPT_Id { get; set; }
+        public Guid? TinhTrang_Id { get; set; }
+        public Guid? BoPhan_Id { get; set; }
+        public string DonViSuDung { get; set; }
+        public string KLBT { get; set; }
+        public string KLHH { get; set; }
+        public string KLKT { get; set; }
+        public string KLTB { get; set; }
+        public string TinhTrang { get; set; }
+        public string Note { get; set; }
+        public string Address_nearest { get; set; }
+        public string LoaiPT { get; set; }
+        public string MaPhuongTien { get; set; }
+        public int SoKM { get; set; }
+        public int SoChuyenXe { get; set; }
+        public int SoKM_Adsun { get; set; }
+        public string NgayBatDau { get; set; }
+    }
+    public class UserNet_Master
+    {
+        public bool IsDeleted { get; set; }
+        public Guid Id { get; set; }
+        public string MaNhanVien { get; set; }
+        public string FullName { get; set; }
+        public string HinhAnhUrl_Thilogi { get; set; }
+        public string PhoneNumber { get; set; }
+    }
+    public class User_Master
+    {
+        public bool IsDeleted { get; set; }
+        public Guid Id { get; set; }
+        public Guid? DonVi_Id { get; set; }
+        public Guid? PhongBan_Id { get; set; }
+        public Guid? User_Id { get; set; }
+        
+
+    }
+    public class BoPhan_Master
+    {
+        public bool IsDeleted { get; set; }
+        public Guid Id { get; set; }
+        public Guid? DonVi_Id { get; set; }
+        public string MaPhongBan { get; set; }
+        public string TenPhongBan { get; set; }
+    }
+    public class ThongBao_Master
+    {
+        public bool IsDeleted { get; set; }
+        public Guid Id { get; set; }
+        public Guid? UserRole_Id { get; set; }
+        public Guid? User_Id { get; set; }
+        public string FCMToken { get; set; }
+        public string NguoiPhuTrach { get; set; }
+        public string LoaiDieuPhoi { get; set; }
+    }
+    public class DonVi_Master
+    {
+        public bool IsDeleted { get; set; }
+        public Guid Id { get; set; }
+        public string MaDonVi { get; set; }
+        public string TenDonVi { get; set; }
+        public Guid? TapDoan_Id { get; set; }
+    }
+    public class DiaLy_DiaDiem
+    {
+        public bool IsDeleted { get; set; }
+        public Guid Id { get; set; }
+        public Guid? DiaLy_LoaiDiaDiem_Id { get; set; }
+        public string MaDiaDiem { get; set; }
+        public string TenDiaDiem { get; set; }
+        public string ToaDo { get; set; }
+    }
+
+
 
     public class LoginModel
     {
         public string Username { get; set; }
         public string Password { get; set; }
         public string Domain { get; set; }
+        public string Api { get; set; }
     }
     public class LoginMobileModel
     {
@@ -111,6 +221,284 @@ namespace ERP.Models
         public string TenDonViTraLuong { get; set; }
 
     }
+    public class ImportMMS_KeHoach
+    {
+
+        public Guid Id { get; set; }
+        public string BienSo1 { get; set; }
+        public string BienSo2 { get; set; }
+        public string MaThietBi { get; set; }
+        public string TenThietBi { get; set; }
+        public string NgayBatDau { get; set; }
+        public string LoaiBaoDuong { get; set; }
+        public string TanSuat { get; set; }
+        public string GiaTri { get; set; }
+        public Guid? PhuongTien_Id { get; set; }
+        public Guid? ThietBi_Id { get; set; }
+        public Guid? BaoDuong_Id { get; set; }
+        public Guid? DiaDiem_Id { get; set; }
+        public string MaDiaDiem { get; set; }
+        public string NguoiYeuCau { get; set; }
+        public string NguoiXacNhan { get; set; }
+        public string NguoiXacNhanHoanThanh { get; set; }
+        public string NguoiDiBaoDuong { get; set; }
+        public bool IsLoi { get; set; }
+        public List<string> lst_Lois { get; set; }
+    }
+    public class ImportMMS_LichSu
+    {
+
+        public Guid Id { get; set; }
+        public string BienSo1 { get; set; }
+        public string BienSo2 { get; set; }
+        public string MaThietBi { get; set; }
+        public string TenThietBi { get; set; }
+        public string NgayBaoDuong { get; set; }
+        public string NgayHoanThanh { get; set; }
+        public string LoaiBaoDuong { get; set; }
+        public string TanSuat { get; set; }
+        public string GiaTri { get; set; }
+        public string DiaDiem { get; set; }
+
+        public string NoiDung { get; set; }
+        public string KetQua { get; set; }
+        public string NguoiYeuCau { get; set; }
+        public string NguoiXacNhan { get; set; }
+        public string NguoiXacNhanHoanThanh { get; set; }
+        public string NguoiDiBaoDuong { get; set; }
+        public string ChiPhi { get; set; }
+        public Guid? PhuongTien_Id { get; set; }
+        public Guid? ThietBi_Id { get; set; }
+        public Guid? BaoDuong_Id { get; set; }
+        public Guid? DiaDiem_Id { get; set; }
+        public string MaDiaDiem { get; set; }
+        public List<LichSu> lichSu { get; set; } = new List<LichSu>();
+        public bool IsLoi { get; set; }
+        public List<string> lst_Lois { get; set; }
+    }
+    public class LichSu
+    {
+        public string NoiDungBaoDuong { get; set; }
+        public string DinhMuc { get; set; }
+        public string LoaiBaoDuong { get; set; }
+        public string TongChiPhi { get; set; }
+        public string GhiChu { get; set; }
+
+    }
+
+
+    public class ImportMMS_DS_PhuongTien
+    {
+
+        public Guid Id { get; set; }
+        public string BienSo1 { get; set; }
+        public string BienSo2 { get; set; }
+        public string DonViSuDung { get; set; }
+        public string HinhAnh { get; set; }
+        public string TinhTrang { get; set; }
+        public string NgayBatDau { get; set; }
+        public string Note { get; set; }
+        public string LoaiPT { get; set; }
+        public string Model { get; set; }
+        public string Model_Option { get; set; }
+        public string KLBT { get; set; }
+        public string KLHH { get; set; }
+        public string KLTB { get; set; }
+        public string KLKT { get; set; }
+        public string Address_nearest { get; set; }
+        public string ViTri { get; set; }
+        public string ViTri_Lat { get; set; }
+        public string ViTri_Long { get; set; }
+        public string MaPhuongTien { get; set; }
+        public Guid? Model_Id { get; set; }
+        public Guid? DonVi_Id { get; set; }
+        public Guid? LoaiPT_Id { get; set; }
+        public Guid? TinhTrang_Id { get; set; }
+        public bool IsLoi { get; set; }
+        public List<string> lst_Lois { get; set; }
+    }
+    public class ImportMMS_DS_PhanBoDonVi
+    {
+
+        public Guid Id { get; set; }
+        public Guid? PhuongTien_Id { get; set; }
+        public string BienSo1 { get; set; }
+        public Guid? DonVi_Id { get; set; }
+        public string DonViSuDung { get; set; }
+        public Guid? BoPhan_Id { get; set; }
+        public string BoPhanSuDung { get; set; }
+        public string NgayBatDau { get; set; }
+        public string NgayKetThuc { get; set; }
+        public bool IsLoi { get; set; }
+        public List<string> lst_Lois { get; set; }
+
+    }
+    public class ImportMMS_DS_PhuTrachBoPhan
+    {
+
+        public Guid Id { get; set; }
+        public string BienSo1 { get; set; }
+        public Guid? User_Id { get; set; }
+        public Guid? User2_Id { get; set; }
+        public string DonViSuDung { get; set; }
+        public Guid? DonVi_Id { get; set; }
+        public Guid? BoPhan_Id { get; set; }
+        public string BoPhanSuDung { get; set; }
+        public Guid? PhuongTien_Id { get; set; }
+        public string MaNhanVien { get; set; }
+        public string NgayBatDau { get; set; }
+        public string NgayKetThuc { get; set; }
+        public bool IsLoi { get; set; }
+        public List<string> lst_Lois { get; set; }
+
+    }
+
+    public class ImportMMS_GhepNoiPT_TB
+    {
+
+        public Guid Id { get; set; }
+        public string BienSo1 { get; set; }
+        public Guid? ThietBi_Id { get; set; }
+        public Guid? ThietBi2_Id { get; set; }
+        public string DonViSuDung { get; set; }
+        public Guid? DonVi_Id { get; set; }
+        public Guid? BoPhan_Id { get; set; }
+        public string BoPhanSuDung { get; set; }
+        public Guid? PhuongTien_Id { get; set; }
+        public string TenThietBi { get; set; }
+        public string MaThietBi { get; set; }
+        public string MaThietBi2 { get; set; }
+        public string NgayBatDau { get; set; }
+        public string NgayKetThuc { get; set; }
+        public bool IsLoi { get; set; }
+        public List<string> lst_Lois { get; set; }
+
+    }
+    public class ImportMMS_DS_ThietBi
+    {
+        public Guid Id { get; set; }
+        public string MaThietBi { get; set; }
+        public string MaCode_BienSo1 { get; set; }
+        public string MaCode_BienSo2 { get; set; }
+        public string Name { get; set; }
+        public string Model { get; set; }
+        public string LoaiTB { get; set; }
+        public string PhanBo { get; set; }
+        public string ViTri { get; set; }
+        public string ViTri_Lat { get; set; }
+        public string ViTri_Long { get; set; }
+        public string TinhTrang { get; set; }
+        public string NgayBatDau { get; set; }
+        public string Note { get; set; }
+        public Guid? LoaiTB_Id { get; set; }
+        public Guid? Model_Id { get; set; }
+        public bool IsLoi { get; set; }
+        public List<string> lst_Lois { get; set; }
+    }
+
+    public class ImportMMS_DM_DonVi
+    {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public string Name_Eng { get; set; }
+        public string Note { get; set; }
+        public string MaDV { get; set; }
+        public bool IsLoi { get; set; }
+        public List<string> lst_Lois { get; set; }
+    }
+    public class ImportMMS_DM_BoPhan
+    {
+        public Guid Id { get; set; }
+
+        public Guid? DonVi_Id { get; set; }
+
+        public string Name { get; set; }
+        public string Name_Eng { get; set; }
+        public string Note { get; set; }
+        public string MaBP { get; set; }
+        public bool IsLoi { get; set; }
+        public List<string> lst_Lois { get; set; }
+    }
+    public class ImportMMS_DM_Nhom
+    {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public string Name_Eng { get; set; }
+        public string Note { get; set; }
+        public bool IsLoi { get; set; }
+        public List<string> lst_Lois { get; set; }
+    }
+    public class ImportMMS_DM_BaoDuong
+    {
+        public Guid Id { get; set; }
+        public string LoaiBD { get; set; }
+        public string TanSuat { get; set; }
+        public string GiaTri { get; set; }
+        public bool IsLoi { get; set; }
+        public List<string> lst_Lois { get; set; }
+    }
+    public class ImportMMS_DM_Loai
+    {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public string Code { get; set; }
+        public string Name_Eng { get; set; }
+        public string ThuocNhom { get; set; }
+        public string Note { get; set; }
+        public Guid? Nhom_Id { get; set; }
+        public bool IsLoi { get; set; }
+        public List<string> lst_Lois { get; set; }
+    }
+    public class ImportMMS_DM_HangMuc
+    {
+        public Guid Id { get; set; }
+        public Guid? TanSuat_Id { get; set; }
+        public string NoiDungBaoDuong { get; set; }
+        public string DinhMuc { get; set; }
+        public string LoaiBaoDuong { get; set; }
+        public string TenTanSuat { get; set; }
+        public string GhiChu { get; set; }
+        public bool IsLoi { get; set; }
+        public List<string> lst_Lois { get; set; }
+    }
+
+    public class ImportMMS_DM_Model
+    {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public string Option { get; set; }
+        public string Code { get; set; }
+        public string Name_Eng { get; set; }
+        public string Type { get; set; }
+        public string PairingAbility { get; set; }
+        public string KLBT { get; set; }
+        public string TTMK_KLHH { get; set; }
+        public string KLTB { get; set; }
+        public string KLKT { get; set; }
+        public string Note { get; set; }
+        public Guid? TanSuat_Id { get; set; }
+
+        public bool IsLoi { get; set; }
+        public List<string> lst_Lois { get; set; }
+    }
+    public class ImportMMS_DM_TinhTrang
+    {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public string Arrange { get; set; }
+
+        public bool IsLoi { get; set; }
+        public List<string> lst_Lois { get; set; }
+    }
+    public class ImportMMS_Status
+    {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public string Note { get; set; }
+
+        public bool IsLoi { get; set; }
+        public List<string> lst_Lois { get; set; }
+    }
     public class ImportDanhSachXeDongContModel
     {
         public Guid? Id { get; set; }
@@ -200,134 +588,6 @@ namespace ERP.Models
         public bool IsLoi { get; set; }
         public List<string> lst_Lois { get; set; }
     }
-
-    public class ImportMMS_DS_PhuongTien
-    {
-
-        public Guid Id { get; set; }
-        public string BienSo1 { get; set; }
-        public string BienSo2 { get; set; }
-        public string DonViSuDung { get; set; }
-        public string HinhAnh { get; set; }
-        public string TinhTrang { get; set; }
-        public string NgayBatDau { get; set; }
-        public string Note { get; set; }
-        public string LoaiPT { get; set; }
-        public string Model { get; set; }
-        public string Model_Option { get; set; }
-        public string KLBT { get; set; }
-        public string KLHH { get; set; }
-        public string KLTB { get; set; }
-        public string KLKT { get; set; }
-        public string Address_nearest { get; set; }
-        public string ViTri { get; set; }
-        public string ViTri_Lat { get; set; }
-        public string ViTri_Long { get; set; }
-        public string MaPhuongTien { get; set; }
-
-        public bool IsLoi { get; set; }
-        public List<string> lst_Lois { get; set; }
-    }
-
-    public class ImportMMS_DS_ThietBi
-    {
-        public Guid Id { get; set; }
-        public string MaThietBi { get; set; }
-        public string MaCode_BienSo1 { get; set; }
-        public string MaCode_BienSo2 { get; set; }
-        public string Name { get; set; }
-        public string Model { get; set; }
-        public string LoaiTB { get; set; }
-        public string PhanBo { get; set; }
-        public string ViTri { get; set; }
-        public string ViTri_Lat { get; set; }
-        public string ViTri_Long { get; set; }
-        public string TinhTrang { get; set; }
-        public string NgayBatDau { get; set; }
-        public string Note { get; set; }
-        public bool IsLoi { get; set; }
-        public List<string> lst_Lois { get; set; }
-    }
-
-    public class ImportMMS_DM_DonVi
-    {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-        public string Name_Eng { get; set; }
-        public string Note { get; set; }
-        public string MaDV { get; set; }
-        public bool IsLoi { get; set; }
-        public List<string> lst_Lois { get; set; }
-    }
-    public class ImportMMS_DM_BoPhan
-    {
-        public Guid Id { get; set; }
-
-        public Guid? DonVi_Id { get; set; }
-
-        public string Name { get; set; }
-        public string Name_Eng { get; set; }
-        public string Note { get; set; }
-        public string MaBP { get; set; }
-        public bool IsLoi { get; set; }
-        public List<string> lst_Lois { get; set; }
-    }
-      public class ImportMMS_DM_Nhom
-    {
-       public Guid Id { get; set; }
-        public string Name { get; set; }
-        public string Name_Eng { get; set; }
-        public string Note { get; set; }        
-        public bool IsLoi { get; set; }
-        public List<string> lst_Lois { get; set; }
-    }
-     public class ImportMMS_DM_Loai
-    {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-        public string Code { get; set; }
-        public string Name_Eng { get; set; }
-        public string ThuocNhom { get; set; }
-        public string Note { get; set; }   
-        public bool IsLoi { get; set; }
-        public List<string> lst_Lois { get; set; }
-    }
-     public class ImportMMS_DM_Model
-    {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-        public string Option { get; set; }
-        public string Code { get; set; }
-        public string Name_Eng { get; set; }
-        public string Type { get; set; }
-        public string PairingAbility { get; set; }
-        public string KLBT { get; set; }
-        public string TTMK_KLHH { get; set; }
-        public string KLTB { get; set; }
-        public string KLKT { get; set; }
-        public string Note { get; set; }
-
-        public bool IsLoi { get; set; }
-        public List<string> lst_Lois { get; set; }
-    }
-     public class ImportMMS_DM_TinhTrang
-    {
-         public Guid Id { get; set; }
-        public string Name { get; set; }
-        public string Arrange { get; set; }
-
-        public bool IsLoi { get; set; }
-        public List<string> lst_Lois { get; set; }
-    }
-    public class ImportMMS_Status
-    {
-         public Guid Id { get; set; }
-        public string Name { get; set; }
-        public string Note { get; set; }
-
-        public bool IsLoi { get; set; }
-        public List<string> lst_Lois { get; set; }
-    }
     public class ImportKeHoachGiaoXeModel
     {
         public Guid? Id { get; set; }
@@ -371,6 +631,7 @@ namespace ERP.Models
         public string NgayDenKV { get; set; }
         public string GioDenKV { get; set; }
         public string NgayDuKienDen { get; set; }
+        public string NgayThucTeDen { get; set; }
         public string GioDen { get; set; }
         public string SoCont { get; set; }
         public string SoSeal { get; set; }
@@ -1657,6 +1918,30 @@ namespace ERP.Models
     public class ImportViTri
     {
         public IFormFile file { get; set; }
+        // public Guid DonVi_Id { get; set; }
+    }
+
+    public class TongHopBCModel
+    {
+        public string MaDongXe { get; set; }
+        public string MaLoaiPhuongTien { get; set; }
+        public string TenNhanHieu { get; set; }
+        public string TenVungMien { get; set; }
+        public int SLXeTonCoYC_TLG { get; set; }
+        public int SLXeTonCoYC_ClA { get; set; }
+        public int SLXuatXeNgayCuoi { get; set; }
+        public int LuyKeXuatXe { get; set; }
+        public int SLXeTonCoYC_BB { get; set; }
+        public int SLXeTonCoYC_NB { get; set; }
+        public int SLGiaoXeCTTTNgayCuoi { get; set; }
+        public int SLLuyKeGiaoXeCTTT { get; set; }
+        public int SLDangDiChuyen { get; set; }
+        public int KeHoachGiaoDay0 { get; set; }
+        public int KeHoachGiaoDay1 { get; set; }
+        public int KeHoachGiaoDay2 { get; set; }
+        public int KeHoachGiaoDay3 { get; set; }
+        public int KeHoachGiaoDay4 { get; set; }
+        public int KeHoachGiaoDay5 { get; set; }
         // public Guid DonVi_Id { get; set; }
     }
 

@@ -7,23 +7,9 @@ namespace ERP.Infrastructure
 {
   public interface IUnitofWork : IDisposable
   {
-    IMenuRepository Menus { get; }
-
-    IPhongbanRepository phongbans { get; }
-    IDonViRepository DonVis { get; }
-    IMenu_RoleRepository Menu_Roles { get; }
     ILogRepository Logs { get; }
-    IBoPhanRepository BoPhans { get; }
-    ITapDoanRepository tapDoans { get; }
-    IChucVuRepository chucVus { get; }
-
-    ICBNV_DieuChuyenRepository cBNV_DieuChuyens { get; }
     IConfigRepository Configs { get; }
-    IRoleByDonViRepository roleByDonVis { get; }
-    IRole_DV_PBRepository role_DV_PBs { get; }
-    IChiTiet_DV_PB_BPRepository chiTiet_DV_PB_BPs { get; }
-    INhomDoiTacRepository NhomDoiTacs { get; }
-    ITaiXeRepository TaiXes { get; }
+
     IAdsunRepository Adsuns { get; }
     IDS_PhuongTienRepository DS_PhuongTiens { get; }
     IPhuongTien_PhuTrachRepository PhuongTien_PhuTrachs { get; }
@@ -37,9 +23,17 @@ namespace ERP.Infrastructure
     IDM_TinhTrangRepository DM_TinhTrangs { get; }
     ITranslateRepository Translates { get; }
     IStatusRepository Statuss { get; }
-
-
-
+    IDM_BaoDuongRepository DM_BaoDuongs { get; }
+    IKeHoachBaoDuongRepository KeHoachBaoDuongs { get; }
+    ILichSuBaoDuongRepository LichSuBaoDuongs { get; }
+    IMMS_PhuTrachBoPhanRepository MMS_PhuTrachBoPhans { get; }
+    ILichSuPhanBoDonViRepository LichSuPhanBoDonVis { get; }
+    IDM_TanSuatRepository DM_TanSuats { get; }
+    IGhepNoiPhuongTien_ThietBiRepository GhepNoiPhuongTien_ThietBis { get; }
+    IDM_HangMucRepository DM_HangMucs { get; }
+    IThongTinTheoHangMucRepository ThongTinTheoHangMucs { get; }
+    ILichSuBaoDuong_ChiTietRepository LichSuBaoDuong_ChiTiets { get; }
+    ILichSuKiemTraHangNgayRepository LichSuKiemTraHangNgays { get; }
     int Complete();
   }
 }

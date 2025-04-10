@@ -11,18 +11,95 @@ using System.Text.RegularExpressions;
 using OpenQA.Selenium.Edge;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
+using Microsoft.EntityFrameworkCore;
+using ERP.Models;
+using Google.Apis.Auth.OAuth2;
 
 namespace ERP.Helpers
 {
+    public class DataService
+    {
+        private readonly SecondDbContext _db2Context;
+
+        public DataService(SecondDbContext db2Context)
+        {
+            _db2Context = db2Context;
+        }
+
+        // Lấy dữ liệu từ DB1
+        public async Task<List<DonVi_Master>> GetDonVi()
+        {
+            return await _db2Context.DonVis.ToListAsync();
+        }
+        public async Task<List<DiaLy_DiaDiem>> GetDiadiem()
+        {
+            return await _db2Context.DiaLy_DiaDiems.ToListAsync();
+        }
+        public async Task<List<ThongBao_Master>> GetToken()
+        {
+            return await _db2Context.Notifications.ToListAsync();
+        }
+        public async Task<List<User_Master>> GetUser()
+        {
+            return await _db2Context.ChiTiet_DV_PB_BPs.ToListAsync();
+        }
+        public async Task<List<UserNet_Master>> GetUserNet()
+        {
+            return await _db2Context.AspNetUsers.ToListAsync();
+        }
+        public async Task<List<BoPhan_Master>> GetBoPhan()
+        {
+            return await _db2Context.phongbans.ToListAsync();
+        }
+        public IQueryable<ThongBao_Master> GetListToken()
+        {
+            return _db2Context.Notifications;
+        }
+        public IQueryable<DonVi_Master> GetListDonVi()
+        {
+            return _db2Context.DonVis;
+        }
+
+
+    }
+    public class PushThongBao
+    {
+        // public HttpClient Client { get; set; }
+        private static readonly string[] Scopes = { "https://www.googleapis.com/auth/firebase.messaging" };
+
+        public PushThongBao()
+        {
+
+        }
+        public async Task<string> GetAccessTokenAsync()
+        {
+            try
+            {
+                GoogleCredential credential;
+                using (var stream = new FileStream("Credentials_app.json", FileMode.Open, FileAccess.Read))
+                {
+                    credential = GoogleCredential.FromStream(stream)
+                        .CreateScoped(Scopes);
+                }
+                // Lấy token
+                var token = await ((ITokenAccess)credential).GetAccessTokenForRequestAsync();
+                return token;
+            }
+            catch (Exception ex)
+            {
+                // Log lỗi
+                Console.WriteLine($"Error in GetAccessTokenAsync: {ex.Message}");
+                throw;
+            }
+        }
+    }
     public class DownloadImage
     {
         // public HttpClient Client { get; set; }
-
         public DownloadImage()
         {
 
         }
-
         public string ImageHRM(string imageUrl)
         {
             var fileName = Path.GetFileName(imageUrl);

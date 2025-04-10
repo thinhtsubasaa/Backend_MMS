@@ -43,8 +43,8 @@ namespace ERP.Controllers
             var data = uow.DM_BoPhans.GetAll(t => !t.IsDeleted
                 ).Select(x => new
                 {
-                   x.Id,
-                   x.MaBP,
+                    x.Id,
+                    x.MaBP,
                 });
             if (page == -1)
             {
@@ -80,12 +80,14 @@ namespace ERP.Controllers
         [HttpGet("BoPhan")]
         public ActionResult GetTaiXe()
         {
-
             var data = uow.DM_BoPhans.GetAll(t => !t.IsDeleted
                 ).Select(x => new
                 {
                     x.Id,
                     x.MaBP,
+                    x.Name,
+                    x.DonVi_Id,
+                    x.Note
 
                 });
             return Ok(data);
@@ -243,7 +245,10 @@ namespace ERP.Controllers
             var query = uow.DM_BoPhans.GetAll(x => x.Id == id).Select(x => new
             {
                 x.Id,
-                x.MaBP
+                x.MaBP,
+                x.Name,
+                x.DonVi_Id,
+                x.Note,
             }).FirstOrDefault();
             if (query == null)
             {
@@ -262,53 +267,6 @@ namespace ERP.Controllers
                     return BadRequest(ModelState);
                 }
                 if (uow.DM_BoPhans.Exists(x => x.MaBP == data.MaBP && !x.IsDeleted))
-                    return StatusCode(StatusCodes.Status409Conflict, "Mã " + data.MaBP+ " đã tồn tại trong hệ thống");
-                else if (uow.DM_BoPhans.Exists(x => x.MaBP == data.MaBP && x.IsDeleted))
-                {
-
-                    var d = uow.DM_BoPhans.GetAll(x => x.MaBP == data.MaBP).FirstOrDefault();
-                    d.IsDeleted = false;
-                    d.DeletedBy = null;
-                    d.DeletedDate = null;
-                    d.UpdatedBy = Guid.Parse(User.Identity.Name);
-                    d.UpdatedDate = DateTime.Now;
-                    d.MaBP = data.MaBP;
-                    d.Name = data.Name;
-                  
-                    uow.DM_BoPhans.Update(d);
-
-                }
-                else
-                {
-                    DM_BoPhan cv = new DM_BoPhan();
-                    Guid id = Guid.NewGuid();
-                    cv.Id = id;
-                   cv.Name = data.Name;
-                   cv.MaBP = data.MaBP;
-                    cv.CreatedDate = DateTime.Now;
-                    cv.CreatedBy = Guid.Parse(User.Identity.Name);
-                    uow.DM_BoPhans.Add(cv);
-                }
-
-                uow.Complete();
-                return Ok();
-            }
-        }
-
-        [HttpPut]
-        public ActionResult Put(Guid id, DM_BoPhan data)
-        {
-            lock (Commons.LockObjectState)
-            {
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
-                if (id != data.Id)
-                {
-                    return BadRequest();
-                }
-                if (uow.DM_BoPhans.Exists(x => x.MaBP == data.MaBP && x.Id != data.Id && !x.IsDeleted))
                     return StatusCode(StatusCodes.Status409Conflict, "Mã " + data.MaBP + " đã tồn tại trong hệ thống");
                 else if (uow.DM_BoPhans.Exists(x => x.MaBP == data.MaBP && x.IsDeleted))
                 {
@@ -321,25 +279,49 @@ namespace ERP.Controllers
                     d.UpdatedDate = DateTime.Now;
                     d.MaBP = data.MaBP;
                     d.Name = data.Name;
-                   
+
                     uow.DM_BoPhans.Update(d);
 
                 }
                 else
                 {
-                    var d = uow.DM_BoPhans.GetAll(x => x.Id == id).FirstOrDefault();
-                    d.UpdatedBy = Guid.Parse(User.Identity.Name);
-                    d.UpdatedDate = DateTime.Now;
-                    d.MaBP = data.MaBP;
-                    d.Name = data.Name;
-                   
-                    uow.DM_BoPhans.Update(d);
+                    DM_BoPhan cv = new DM_BoPhan();
+                    Guid id = Guid.NewGuid();
+                    cv.Id = id;
+                    cv.Name = data.Name;
+                    cv.MaBP = data.MaBP;
+                    cv.CreatedDate = DateTime.Now;
+                    cv.CreatedBy = Guid.Parse(User.Identity.Name);
+                    uow.DM_BoPhans.Add(cv);
                 }
 
                 uow.Complete();
+                return Ok();
+            }
+        }
+
+        [HttpPut]
+        public ActionResult Put(Guid id, DM_BoPhan duLieu)
+        {
+            lock (Commons.LockObjectState)
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                if (id != duLieu.Id)
+                {
+                    return BadRequest();
+                }
+                duLieu.UpdatedBy = Guid.Parse(User.Identity.Name);
+                duLieu.UpdatedDate = DateTime.Now;
+                uow.DM_BoPhans.Update(duLieu);
+                uow.Complete();
+                //Ghi log truy cập
                 return StatusCode(StatusCodes.Status204NoContent);
             }
         }
+
 
         [HttpDelete]
         public ActionResult Delete(Guid id)

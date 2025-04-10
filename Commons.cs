@@ -28,6 +28,11 @@ namespace ERP
 {
     public class Commons
     {
+        public static class CanhBao
+        {
+            public const int Warning = 48000;
+            public const int Critical = 60000;
+        }
         private static IConfiguration AppSetting { get; }
         static Commons()
         {
@@ -88,7 +93,8 @@ namespace ERP
             return (DateTime.Now - Ngay).Days;
         }
         public static string ApiUrl = "https://apiwms.thilogi.vn/";
-        public static string ApiUrlMMS = "https://10.17.41.233:5001/";
+        public static string ApiUrlMMS = "https://apimms.thilogi.vn/";
+        // public static string ApiUrlMMS = "https://10.17.42.47:5001/";
         public static string NonUnicode(string text)
         {
             string[] arr1 = new string[] { "á", "à", "ả", "ã", "ạ", "â", "ấ", "ầ", "ẩ", "ẫ", "ậ", "ă", "ắ", "ằ", "ẳ", "ẵ", "ặ",
@@ -112,6 +118,7 @@ namespace ERP
             }
             return text;
         }
+        public static int GioiHan = 2000;
 
         public static object LockObjectState = new object();
         public static string TiengVietKhongDau(string s)

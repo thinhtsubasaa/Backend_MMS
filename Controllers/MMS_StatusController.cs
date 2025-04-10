@@ -126,7 +126,7 @@ namespace ERP.Controllers
                         }
 
                         object Name = worksheet.Cells[i, 1].Value;
-                       
+
                         object Note = worksheet.Cells[i, 3].Value;
 
 
@@ -137,7 +137,7 @@ namespace ERP.Controllers
                         info.Id = Guid.NewGuid();
                         info.Name = Name?.ToString().Trim().Replace("\t", "").Replace("\n", "") ?? "";
                         info.Note = Note?.ToString().Trim().Replace("\t", "").Replace("\n", "") ?? "";
-                       
+
 
                         if (string.IsNullOrEmpty(info.Name))
                         {
@@ -213,16 +213,16 @@ namespace ERP.Controllers
                         uow.Statuss.Add(new Status
                         {
                             Name = item.Name,
-                           Note = item.Note,
+                            Note = item.Note,
                             CreatedDate = DateTime.Now,
                             CreatedBy = Guid.Parse(User.Identity.Name),
                         });
                     }
                     else
                     {
-                       
+
                         exit.Name = item.Name;
-                     exit.Note = item.Note;
+                        exit.Note = item.Note;
                         exit.UpdatedDate = DateTime.Now;
                         exit.UpdatedBy = Guid.Parse(User.Identity.Name);
                         uow.Statuss.Update(exit);
@@ -234,138 +234,7 @@ namespace ERP.Controllers
             }
         }
 
-        [HttpGet("GetById")]
-        public ActionResult Get(Guid id)
-        {
-            var query = uow.TaiXes.GetAll(x => x.Id == id).Select(x => new
-            {
-                x.Id,
-                x.MaTaiXe,
-                x.TenTaiXe,
-                x.HangBang,
-                x.SoDienThoai
-            }).FirstOrDefault();
-            if (query == null)
-            {
-                return NotFound();
-            }
-            return Ok(query);
-        }
 
-        [HttpPost]
-        public ActionResult Post(TaiXe data)
-        {
-            lock (Commons.LockObjectState)
-            {
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
-                if (uow.TaiXes.Exists(x => x.MaTaiXe == data.MaTaiXe && !x.IsDeleted))
-                    return StatusCode(StatusCodes.Status409Conflict, "Mã " + data.MaTaiXe + " đã tồn tại trong hệ thống");
-                else if (uow.TaiXes.Exists(x => x.MaTaiXe == data.MaTaiXe && x.IsDeleted))
-                {
-
-                    var d = uow.TaiXes.GetAll(x => x.MaTaiXe == data.MaTaiXe).FirstOrDefault();
-                    d.IsDeleted = false;
-                    d.DeletedBy = null;
-                    d.DeletedDate = null;
-                    d.UpdatedBy = Guid.Parse(User.Identity.Name);
-                    d.UpdatedDate = DateTime.Now;
-                    d.MaTaiXe = data.MaTaiXe;
-                    d.TenTaiXe = data.TenTaiXe;
-                    d.HangBang = data.HangBang;
-                    d.SoDienThoai = data.SoDienThoai;
-                    uow.TaiXes.Update(d);
-
-                }
-                else
-                {
-                    TaiXe cv = new TaiXe();
-                    Guid id = Guid.NewGuid();
-                    cv.Id = id;
-                    cv.MaTaiXe = data.MaTaiXe;
-                    cv.TenTaiXe = data.TenTaiXe;
-                    cv.HangBang = data.HangBang;
-                    cv.SoDienThoai = data.SoDienThoai;
-                    cv.CreatedDate = DateTime.Now;
-                    cv.CreatedBy = Guid.Parse(User.Identity.Name);
-                    uow.TaiXes.Add(cv);
-                }
-
-                uow.Complete();
-                return Ok();
-            }
-        }
-
-        [HttpPut]
-        public ActionResult Put(Guid id, TaiXe data)
-        {
-            lock (Commons.LockObjectState)
-            {
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
-                if (id != data.Id)
-                {
-                    return BadRequest();
-                }
-                if (uow.TaiXes.Exists(x => x.MaTaiXe == data.MaTaiXe && x.Id != data.Id && !x.IsDeleted))
-                    return StatusCode(StatusCodes.Status409Conflict, "Mã " + data.MaTaiXe + " đã tồn tại trong hệ thống");
-                else if (uow.TaiXes.Exists(x => x.MaTaiXe == data.MaTaiXe && x.IsDeleted))
-                {
-
-                    var d = uow.TaiXes.GetAll(x => x.MaTaiXe == data.MaTaiXe).FirstOrDefault();
-                    d.IsDeleted = false;
-                    d.DeletedBy = null;
-                    d.DeletedDate = null;
-                    d.UpdatedBy = Guid.Parse(User.Identity.Name);
-                    d.UpdatedDate = DateTime.Now;
-                    d.MaTaiXe = data.MaTaiXe;
-                    d.TenTaiXe = data.TenTaiXe;
-                    d.HangBang = data.HangBang;
-                    d.SoDienThoai = data.SoDienThoai;
-                    uow.TaiXes.Update(d);
-
-                }
-                else
-                {
-                    var d = uow.TaiXes.GetAll(x => x.Id == id).FirstOrDefault();
-                    d.UpdatedBy = Guid.Parse(User.Identity.Name);
-                    d.UpdatedDate = DateTime.Now;
-                    d.MaTaiXe = data.MaTaiXe;
-                    d.TenTaiXe = data.TenTaiXe;
-                    d.HangBang = data.HangBang;
-                    d.SoDienThoai = data.SoDienThoai;
-                    uow.TaiXes.Update(d);
-                }
-
-                uow.Complete();
-                return StatusCode(StatusCodes.Status204NoContent);
-            }
-        }
-
-        [HttpDelete]
-        public ActionResult Delete(Guid id)
-        {
-            lock (Commons.LockObjectState)
-            {
-                TaiXe duLieu = uow.TaiXes.GetById(id);
-
-                if (duLieu == null)
-                {
-                    return NotFound();
-                }
-                duLieu.DeletedDate = DateTime.Now;
-                duLieu.DeletedBy = Guid.Parse(User.Identity.Name);
-                duLieu.IsDeleted = true;
-                uow.TaiXes.Update(duLieu);
-                uow.Complete();
-                return Ok(duLieu);
-            }
-
-        }
 
     }
 }

@@ -78,13 +78,12 @@ namespace ERP.Controllers
         [HttpGet("Nhom")]
         public ActionResult GetTaiXe()
         {
-
             var data = uow.DM_Nhoms.GetAll(t => !t.IsDeleted
                 ).Select(x => new
                 {
                     x.Id,
                     x.Name,
-
+                    x.Note,
                 });
             return Ok(data);
         }
@@ -241,17 +240,31 @@ namespace ERP.Controllers
                 return StatusCode(StatusCodes.Status200OK);
             }
         }
+        [HttpGet("FileMau")]
+        public ActionResult FileMauTM_DB()
+        {
+            string fullFilePath = Path.Combine(Directory.GetParent(environment.ContentRootPath).FullName, "Uploads/Templates/FileMau_DM_Nhom.xlsx");
+            string fileName = "FileMau_DM_Nhom_" + DateTime.Now.ToString("HHmmss") + ".xlsx";
+            using (ExcelPackage package = new ExcelPackage(new FileInfo(fullFilePath)))
+            {
+                if (package.Workbook.Worksheets.Count == 0)
+                {
+                    package.Workbook.Worksheets.Add("Sheet1");
+                }
+                ExcelWorksheet worksheet = package.Workbook.Worksheets[1];
 
+
+                return Ok(new { data = package.GetAsByteArray(), fileName });
+            }
+        }
         [HttpGet("GetById")]
         public ActionResult Get(Guid id)
         {
-            var query = uow.TaiXes.GetAll(x => x.Id == id).Select(x => new
+            var query = uow.DM_Nhoms.GetAll(x => x.Id == id).Select(x => new
             {
                 x.Id,
-                x.MaTaiXe,
-                x.TenTaiXe,
-                x.HangBang,
-                x.SoDienThoai
+                x.Name,
+                x.Note
             }).FirstOrDefault();
             if (query == null)
             {
@@ -261,7 +274,7 @@ namespace ERP.Controllers
         }
 
         [HttpPost]
-        public ActionResult Post(TaiXe data)
+        public ActionResult Post(DM_Nhom data)
         {
             lock (Commons.LockObjectState)
             {
@@ -269,36 +282,32 @@ namespace ERP.Controllers
                 {
                     return BadRequest(ModelState);
                 }
-                if (uow.TaiXes.Exists(x => x.MaTaiXe == data.MaTaiXe && !x.IsDeleted))
-                    return StatusCode(StatusCodes.Status409Conflict, "Mã " + data.MaTaiXe + " đã tồn tại trong hệ thống");
-                else if (uow.TaiXes.Exists(x => x.MaTaiXe == data.MaTaiXe && x.IsDeleted))
+                if (uow.DM_Nhoms.Exists(x => x.Name == data.Name && !x.IsDeleted))
+                    return StatusCode(StatusCodes.Status409Conflict, "Mã " + data.Name + " đã tồn tại trong hệ thống");
+                else if (uow.DM_Nhoms.Exists(x => x.Name == data.Name && x.IsDeleted))
                 {
 
-                    var d = uow.TaiXes.GetAll(x => x.MaTaiXe == data.MaTaiXe).FirstOrDefault();
+                    var d = uow.DM_Nhoms.GetAll(x => x.Name == data.Name).FirstOrDefault();
                     d.IsDeleted = false;
                     d.DeletedBy = null;
                     d.DeletedDate = null;
                     d.UpdatedBy = Guid.Parse(User.Identity.Name);
                     d.UpdatedDate = DateTime.Now;
-                    d.MaTaiXe = data.MaTaiXe;
-                    d.TenTaiXe = data.TenTaiXe;
-                    d.HangBang = data.HangBang;
-                    d.SoDienThoai = data.SoDienThoai;
-                    uow.TaiXes.Update(d);
+                    d.Name = data.Name;
+                    d.Note = data.Note;
+                    uow.DM_Nhoms.Update(d);
 
                 }
                 else
                 {
-                    TaiXe cv = new TaiXe();
+                    DM_Nhom cv = new DM_Nhom();
                     Guid id = Guid.NewGuid();
                     cv.Id = id;
-                    cv.MaTaiXe = data.MaTaiXe;
-                    cv.TenTaiXe = data.TenTaiXe;
-                    cv.HangBang = data.HangBang;
-                    cv.SoDienThoai = data.SoDienThoai;
+                    cv.Name = data.Name;
+                    cv.Note = data.Note;
                     cv.CreatedDate = DateTime.Now;
                     cv.CreatedBy = Guid.Parse(User.Identity.Name);
-                    uow.TaiXes.Add(cv);
+                    uow.DM_Nhoms.Add(cv);
                 }
 
                 uow.Complete();
@@ -307,7 +316,7 @@ namespace ERP.Controllers
         }
 
         [HttpPut]
-        public ActionResult Put(Guid id, TaiXe data)
+        public ActionResult Put(Guid id, DM_Nhom duLieu)
         {
             lock (Commons.LockObjectState)
             {
@@ -315,51 +324,26 @@ namespace ERP.Controllers
                 {
                     return BadRequest(ModelState);
                 }
-                if (id != data.Id)
+                if (id != duLieu.Id)
                 {
                     return BadRequest();
                 }
-                if (uow.TaiXes.Exists(x => x.MaTaiXe == data.MaTaiXe && x.Id != data.Id && !x.IsDeleted))
-                    return StatusCode(StatusCodes.Status409Conflict, "Mã " + data.MaTaiXe + " đã tồn tại trong hệ thống");
-                else if (uow.TaiXes.Exists(x => x.MaTaiXe == data.MaTaiXe && x.IsDeleted))
-                {
-
-                    var d = uow.TaiXes.GetAll(x => x.MaTaiXe == data.MaTaiXe).FirstOrDefault();
-                    d.IsDeleted = false;
-                    d.DeletedBy = null;
-                    d.DeletedDate = null;
-                    d.UpdatedBy = Guid.Parse(User.Identity.Name);
-                    d.UpdatedDate = DateTime.Now;
-                    d.MaTaiXe = data.MaTaiXe;
-                    d.TenTaiXe = data.TenTaiXe;
-                    d.HangBang = data.HangBang;
-                    d.SoDienThoai = data.SoDienThoai;
-                    uow.TaiXes.Update(d);
-
-                }
-                else
-                {
-                    var d = uow.TaiXes.GetAll(x => x.Id == id).FirstOrDefault();
-                    d.UpdatedBy = Guid.Parse(User.Identity.Name);
-                    d.UpdatedDate = DateTime.Now;
-                    d.MaTaiXe = data.MaTaiXe;
-                    d.TenTaiXe = data.TenTaiXe;
-                    d.HangBang = data.HangBang;
-                    d.SoDienThoai = data.SoDienThoai;
-                    uow.TaiXes.Update(d);
-                }
-
+                duLieu.UpdatedBy = Guid.Parse(User.Identity.Name);
+                duLieu.UpdatedDate = DateTime.Now;
+                uow.DM_Nhoms.Update(duLieu);
                 uow.Complete();
+                //Ghi log truy cập
                 return StatusCode(StatusCodes.Status204NoContent);
             }
         }
+
 
         [HttpDelete]
         public ActionResult Delete(Guid id)
         {
             lock (Commons.LockObjectState)
             {
-                TaiXe duLieu = uow.TaiXes.GetById(id);
+                DM_Nhom duLieu = uow.DM_Nhoms.GetById(id);
 
                 if (duLieu == null)
                 {
@@ -368,7 +352,7 @@ namespace ERP.Controllers
                 duLieu.DeletedDate = DateTime.Now;
                 duLieu.DeletedBy = Guid.Parse(User.Identity.Name);
                 duLieu.IsDeleted = true;
-                uow.TaiXes.Update(duLieu);
+                uow.DM_Nhoms.Update(duLieu);
                 uow.Complete();
                 return Ok(duLieu);
             }

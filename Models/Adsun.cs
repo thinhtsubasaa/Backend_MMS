@@ -10,16 +10,14 @@ namespace ERP.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public string Id { get; set; }
+        public Guid Id { get; set; }
+        public string Id_Adsun { get; set; }
         public string Plate { get; set; }
         public string GroupId { get; set; }
-
         public string GroupName { get; set; }
         public string Lat { get; set; }
         public string Lng { get; set; }
-
         public string Speed { get; set; }
-
         public string Km { get; set; }
         public bool Gsm { get; set; }
         public bool Gps { get; set; }

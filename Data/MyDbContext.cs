@@ -59,7 +59,7 @@ namespace ERP.Data
       public Guid? DonVi_Id { get; set; }
       public Guid? PhongBan_Id { get; set; }
       public ICollection<ApplicationUserRole> UserRoles { get; set; }
-      public ICollection<Menu_Role> Menu_Roles { get; set; }
+      // public ICollection<Menu_Role> Menu_Roles { get; set; }
     }
     public class ApplicationUserRole : IdentityUserRole<Guid>
     {
@@ -94,38 +94,26 @@ namespace ERP.Data
               .HasForeignKey(ur => ur.UserId)
               .IsRequired();
         });
-      builder.Entity<Menu_Role>(pq =>
-      {
-        pq.HasKey(ur => new { ur.Menu_Id, ur.Role_Id });
+      // builder.Entity<Menu_Role>(pq =>
+      // {
+      //   pq.HasKey(ur => new { ur.Menu_Id, ur.Role_Id });
 
-        pq.HasOne(ur => ur.Menu)
-            .WithMany(r => r.Menu_Roles)
-            .HasForeignKey(ur => ur.Menu_Id)
-            .IsRequired();
+      //   pq.HasOne(ur => ur.Menu)
+      //       .WithMany(r => r.Menu_Roles)
+      //       .HasForeignKey(ur => ur.Menu_Id)
+      //       .IsRequired();
 
-        pq.HasOne(ur => ur.Role)
-            .WithMany(r => r.Menu_Roles)
-            .HasForeignKey(ur => ur.Role_Id)
-            .IsRequired();
-      });
+      //   pq.HasOne(ur => ur.Role)
+      //       .WithMany(r => r.Menu_Roles)
+      //       .HasForeignKey(ur => ur.Role_Id)
+      //       .IsRequired();
+      // });
     }
 
-    public DbSet<Menu> Menus { get; set; }
-    public DbSet<ChucVu> ChucVus { get; set; }
-    public DbSet<Phongban> phongbans { get; set; }
-    public DbSet<DonVi> DonVis { get; set; }
-    public DbSet<Menu_Role> Menu_Roles { get; set; }
-    public DbSet<Log> Logs { get; set; }
-    public DbSet<BoPhan> BoPhans { get; set; }
-    public DbSet<TapDoan> TapDoans { get; set; }
-    public DbSet<DieuChuyenNhanVien> DieuChuyenNhanViens { get; set; }
-    public DbSet<Config> Configs { get; set; }
-    public DbSet<RoleByDonVi> RoleByDonVis { get; set; }
-    public DbSet<Role_DV_PB> Role_DV_PBs { get; set; }
-    public DbSet<ChiTiet_DV_PB_BP> ChiTiet_DV_PB_BPs { get; set; }
-    public DbSet<NhomDoiTac> NhomDoiTacs { get; set; }
 
-    public DbSet<TaiXe> TaiXes { get; set; }
+
+    public DbSet<Log> Logs { get; set; }
+    public DbSet<Config> Configs { get; set; }
     public DbSet<Adsun> Adsuns { get; set; }
     public DbSet<DS_PhuongTien> DS_PhuongTiens { get; set; }
     public DbSet<PhuongTien_PhuTrach> PhuongTien_PhuTrachs { get; set; }
@@ -139,6 +127,17 @@ namespace ERP.Data
     public DbSet<DM_TinhTrang> DM_TinhTrangs { get; set; }
     public DbSet<Translate> Translates { get; set; }
     public DbSet<Status> Statuss { get; set; }
+    public DbSet<DM_BaoDuong> DM_BaoDuongs { get; set; }
+    public DbSet<KeHoachBaoDuong> KeHoachBaoDuongs { get; set; }
+    public DbSet<LichSuBaoDuong> LichSuBaoDuongs { get; set; }
+    public DbSet<MMS_PhuTrachBoPhan> MMS_PhuTrachBoPhans { get; set; }
+    public DbSet<LichSuPhanBoDonVi> LichSuPhanBoDonVis { get; set; }
+    public DbSet<DM_TanSuat> DM_TanSuats { get; set; }
+    public DbSet<GhepNoiPhuongTien_ThietBi> GhepNoiPhuongTien_ThietBis { get; set; }
+    public DbSet<DM_HangMuc> DM_HangMucs { get; set; }
+    public DbSet<ThongTinTheoHangMuc> ThongTinTheoHangMucs { get; set; }
+    public DbSet<LichSuBaoDuong_ChiTiet> LichSuBaoDuong_ChiTiets { get; set; }
+    public DbSet<LichSuKiemTraHangNgay> LichSuKiemTraHangNgays { get; set; }
 
   }
 }
